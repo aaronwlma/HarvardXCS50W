@@ -2,9 +2,9 @@
 <html>
     <head>
         <title>Aaron Ma's CV - Home</title>
-        <!-- <link rel="stylesheet" href="personalstyles.css"> -->
-        <!-- <link rel="stylesheet" href="build.css">
-        <link rel="stylesheet" href="github.css"> -->
+        <link rel="stylesheet" href="personalstyles.css">
+        <link rel="stylesheet" href="build.css">
+        <link rel="stylesheet" href="github.css">
         <script type="text/javascript">
           function goToNewPage()
           {
@@ -16,16 +16,25 @@
         </script>
     </head>
     <body>
-      <form>
-        <select name="Curriculum Vitae Type" id="forms" accesskey="target">
-          <option value='none' selected>Choose a Type</option>
-          <option value="cv.html">HTML Only</option>
-          <option value="">Custom CSS Applied</option>
-          <option value="">Bootstrap CSS Applied</option>
-          <option value="">GitHub CSS Applied</option>
-          <option value="">PDF Resume Variant</option>
-        </select>
-        <input type=button value="Go" onclick="goToNewPage()" />
-      </form>
+      <div class="index-item">
+        <h1 >Aaron Ma - Curriculum Vitae</h1>
+      </div>
+      <div class="index-item">
+        <h5>CVs were created in fulfillment of the requirements in HarvardX's "Web Programming with Python and Javascript" course.</h2>
+        <h5>The objective of this web page was to practice JavaScript/HTML/CSS syntax and form.</h2>
+      </div>
+      <div class="index-item">
+        <form>
+          <select name="Curriculum Vitae Type" id="forms" accesskey="target">
+            <option value='none' selected>Choose a Type</option>
+            <option value="cv.html">HTML Only</option>
+            <option value="">Custom CSS Applied</option>
+            <option value="">Bootstrap CSS Applied</option>
+            <option value="">GitHub CSS Applied</option>
+            <option value="">PDF Resume Variant</option>
+          </select>
+          <input type=button value="Go" onclick="goToNewPage()" />
+        </form>
+      </div>
     </body>
 </html>
