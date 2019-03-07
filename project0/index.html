@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>My Webpage</title>
+        <title>Aaron Ma's CV - Home</title>
+        <script type="text/javascript">
+          function goToNewPage()
+          {
+              var url = document.getElementById('forms').value;
+              if(url != 'none') {
+                  window.location = url;
+              }
+          }
+        </script>
     </head>
     <body>
-        Hello, world!
+      <form>
+        <select name="Curriculum Vitae Type" id="forms" accesskey="target">
+          <option value='none' selected>Choose a Type</option>
+          <option value="cv.html">HTML Only</option>
+          <option value="">Custom CSS Applied</option>
+          <option value="">Bootstrap CSS Applied</option>
+          <option value="">GitHub CSS Applied</option>
+          <option value="">PDF Resume Variant</option>
+        </select>
+        <input type=button value="Go" onclick="goToNewPage()" />
+      </form>
     </body>
 </html>
