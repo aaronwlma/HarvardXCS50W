@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Aaron Ma's Curriculum Vitae</title>
+        <title>Aaron Ma's CV - Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="personalstyles.css">
-
+        <!-- <link rel="stylesheet" href="personalstyles.css"> -->
+        <!-- <link rel="stylesheet" href="build.css">
+        <link rel="stylesheet" href="github.css"> -->
     </head>
     <body>
         <!-- Personal Info -->
-        <div id="info">
+        <div id="header">
           <h1>Aaron Ma</h1>
-            <ul>
-              <li>Los Angeles, CA</li>
-              <li>aaronwinglokma@gmail.com</li>
-              <li>linkedin.com/in/aaronwlma</li>
-              <li>github.com/aaronwlma</li>
-              <li>aaronwlma.com</li>
-            </ul>
+          <div id="info" class="grid-header">
+            <table class="grid-header-item">
+              <tr>
+                <td>Los Angeles, CA</td>
+              </tr>
+            </table>
+            <table class="grid-header-item">
+              <tr>
+                <td>aaronwinglokma@gmail.com</td>
+              </tr>
+            </table>
+            <table class="grid-header-item">
+              <tr>
+                <td>linkedin.com/in/aaronwlma</td>
+              </tr>
+            </table>
+            <table class="grid-header-item">
+              <tr>
+                <td>github.com/aaronwlma</td>
+              </tr>
+            </table>
+            <table class="grid-header-item">
+              <tr>
+                <td>aaronwlma.com</td>
+              </tr>
+            </table>
+          </div>
         </div>
+
         <!-- CV Info -->
         <div id="skills">
-        <h2>Skills</h2>
+          <h2>Skills</h2>
           <div class="list">
             <h3>Programming Languages</h3>
             <ol>
@@ -30,6 +52,8 @@
               <li>HTML/CSS</li>
               <li>SQL</li>
             </ol>
+          </div>
+          <div class="list">
             <h3>Development Tools</h3>
             <ol>
               <li>Linux/Unix</li>
@@ -40,111 +64,98 @@
             </ol>
           </div>
         </div>
+
         <div id="experience">
-        <h2>Experience</h2>
+          <h2>Experience</h2>
           <div class="grid">
-            <table class="grid-item">
-              <tr>
-                <th><a href="pac.html">Panasonic Avionics Corporation</a></th>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="pac.html">Panasonic Avionics Corporation</a></td>
                 <td><a href="pac.html">Test Engineer</a></td>
-              </tr>
-              <tr>
                 <td><a href="pac.html">July 2017 to Present</a></td>
               </tr>
             </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="fb.html">Facebook</a></th>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="fb.html">Facebook</a></td>
                 <td><a href="fb.html">Public Content Contractor</a></td>
-              </tr>
-              <tr>
                 <td><a href="fb.html">June 2015 to July 2016</a></td>
               </tr>
             </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="conexant.html">Conexant Systems</a></th>
-              </tr>
-              <tr>
-                <td><a href="conexant.html">Audio Product Application Engineer, Intern</a></td>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="conexant.html">Conexant Systems</a></td>
+                <td><a href="conexant.html">Audio Product Application Engineering Intern</a></td>
                 <td><a href="conexant.html">Sept 2014 to June 2015</a></td>
               </tr>
             </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="ntu.html">National Taiwan University</a></th>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="ntu.html">National Taiwan University</a></td>
                 <td><a href="ntu.html">Laboratory Researcher</a></td>
-              </tr>
-              <tr>
                 <td><a href="ntu.html">June 2014 to August 2014</a></td>
               </tr>
             </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="studentcenter.html">University of California, Irvine Student Center</a></th>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="studentcenter.html">University of California, Irvine Student Center</a></td>
                 <td><a href="studentcenter.html">Operations Assistant</a></td>
-              </tr>
-              <tr>
                 <td><a href="studentcenter.html">Sept 2012 to June 2013</a></td>
               </tr>
             </table>
           </div>
         </div>
+
         <div id="projects">
-        <h2>Projects</h2>
+          <h2>Projects</h2>
           <div class="grid">
-            <a class="grid-item" href="anisight.html">Ani.Sight</a>
-            <a class="grid-item" href="applicationsuite.html">Productivity Suite for Android Devices</a>
-            <a class="grid-item" href="effectspedal.html">Multi-Effects Pedal for the Electric Violin</a>
+            <table>
+              <tr class="grid-item">
+                <td><a href="cv.html">Curriculum Vitae</a></td>
+                <td><a href="cv.html">HTML/CSS</a></td>
+                <td><a href="cv.html">Mar 2019 to Present</a></td>
+              </tr>
+              <tr class="grid-item">
+                <td><a href="anisight.html">Ani.Sight</a></td>
+                <td><a href="anisight.html">Python/Javascript/SQLite/HTML/CSS</a></td>
+                <td><a href="anisight.html">Feb 2019 to Present</a></td>
+              </tr>
+              <tr class="grid-item">
+                <td><a href="applicationsuite.html">Productivity Suite for Android Devices</a></td>
+                <td><a href="applicationsuite.html">Java/Android Studio</a></td>
+                <td><a href="applicationsuite.html">Feb 2017 to May 2017</a></td>
+              </tr>
+              <tr class="grid-item">
+                <td><a href="effectspedal.html">Multi-Effects Pedal for the Electric Violin</a></td>
+                <td><a href="effectspedal.html">C++/DSP/Code Composer Studio</a></td>
+                <td><a href="effectspedal.html">Sept 2014 to Mar 2015</a></td>
+              </tr>
+            </table>
           </div>
         </div>
+
         <div id="education">
-        <h2>Education</h2>
+          <h2>Education</h2>
           <div class="grid">
-            <table class="grid-item">
-              <tr>
-                <th><a href="uci.html">University of California, Irvine</a></th>
-              </tr>
-              <tr>
+            <table>
+              <tr class="grid-item">
+                <td><a href="uci.html">University of California, Irvine</a></td>
                 <td><a href="uci.html">Bachelors in Science, Electrical Engineering</a></td>
-              </tr>
-              <tr>
                 <td><a href="uci.html">Sept 2010 to Mar 2015</a></td>
               </tr>
-            </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="hkust.html">Hong Kong University of Science and Technology</a></th>
-              </tr>
-              <tr>
+              <tr class="grid-item">
+                <td><a href="hkust.html">Hong Kong University of Science and Technology</a></td>
                 <td><a href="hkust.html">Masters in Science, Electronic Engineering</a></td>
-              </tr>
-              <tr>
                 <td><a href="hkust.html">Sept 2016 to June 2017</a></td>
               </tr>
-            </table>
-            <table class="grid-item">
-              <tr>
-                <th><a href="onlinecourses.html">Online Courses</a></th>
-              </tr>
-              <tr>
+              <tr class="grid-item">
+                <td><a href="onlinecourses.html">Online Courses</a></td>
                 <td><a href="onlinecourses.html">Topics in Software Engineering and Computer Science</a></td>
-              </tr>
-              <tr>
                 <td><a href="onlinecourses.html">Aug 2018 to Present</a></td>
               </tr>
             </table>
           </div>
         </div>
+      </div>
     </body>
 </html>
