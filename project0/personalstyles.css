@@ -1,17 +1,32 @@
 .grid {
-        background-color: grey;
-        display: grid;
-        padding: 20px;
+        background-color: black;
+        display: flex;
+        flex-wrap: wrap;
         grid-column-gap: 20px;
         grid-row-gap: 10px;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 3fr 3fr 3fr;
+}
+
+.grid-item-skills {
+    width: 50%;
+    background-color: grey;
+    font-size: 20px;
+    text-align: left;
 }
 
 .grid-item {
-    background-color: white;
+    width: 100%;
+    background-color: grey;
     font-size: 20px;
-    padding: 20px;
-    text-align: center;
+    text-align: left;
+}
+
+.grid-item td {
+  width: 33%;
+}
+
+.date {
+  text-align: right;
 }
 
 .index-item {
