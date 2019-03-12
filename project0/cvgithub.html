@@ -17,20 +17,21 @@
     </head>
     <body>
       <!-- Selection Button -->
-      <div class="index-item">
+      <div class="bar-item">
         <form>
           <select name="Curriculum Vitae Type" id="forms" accesskey="target">
             <option value='none' selected>Choose a Type</option>
             <option value="resume.pdf">Resume as PDF</option>
-            <option value="cv.html">HTML Only</option>
             <option value="cvcust.html">Custom CSS Applied</option>
             <option value="cvboot.html">Bootstrap CSS Applied</option>
             <option value="cvgithub.html">GitHub CSS Applied</option>
+            <option value="cv.html">HTML Only</option>
           </select>
           <input type=button value="Go" onclick="goToNewPage()" />
+          <a href="index.html"><input type=button value="Home" onclick="index.html" /></a>
         </form>
       </div>
-      
+
       <div class="container-lg px-3 my-3 markdown-body">
           <!-- Personal Info -->
         <div id="header">
@@ -61,14 +62,14 @@
                   <li>Python</li>
                   <li>Bash</li>
                   <li>HTML/CSS</li>
-                  <li>SQL</li>
+                  <li>SQL/PostgreSQL/GraphQL</li>
                 </ol></td>
                 <td><ol>
                   <li>Linux/Unix</li>
                   <li>Git/GitHub</li>
                   <li>Eclipse</li>
                   <li>SQLite</li>
-                  <li>GraphQL</li>
+                  <li>Heroku</li>
                 </ol></td>
               </tr>
             </table>

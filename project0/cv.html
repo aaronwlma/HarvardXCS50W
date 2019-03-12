@@ -3,7 +3,6 @@
     <head>
         <title>Aaron Ma's CV - HTML Only</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="personalstyles.css"> -->
         <script type="text/javascript">
           function goToNewPage()
           {
@@ -16,17 +15,18 @@
     </head>
     <body>
       <!-- Selection Button -->
-      <div class="index-item">
+      <div class="bar-item">
         <form>
           <select name="Curriculum Vitae Type" id="forms" accesskey="target">
             <option value='none' selected>Choose a Type</option>
             <option value="resume.pdf">Resume as PDF</option>
-            <option value="cv.html">HTML Only</option>
             <option value="cvcust.html">Custom CSS Applied</option>
             <option value="cvboot.html">Bootstrap CSS Applied</option>
             <option value="cvgithub.html">GitHub CSS Applied</option>
+            <option value="cv.html">HTML Only</option>
           </select>
           <input type=button value="Go" onclick="goToNewPage()" />
+          <a href="index.html"><input type=button value="Home" onclick="index.html" /></a>
         </form>
       </div>
       <!-- Personal Info -->
@@ -60,14 +60,14 @@
                 <li>Python</li>
                 <li>Bash</li>
                 <li>HTML/CSS</li>
-                <li>SQL</li>
+                <li>SQL/PostgreSQL/GraphQL</li>
               </ol></td>
               <td><ol>
                 <li>Linux/Unix</li>
                 <li>Git/GitHub</li>
                 <li>Eclipse</li>
                 <li>SQLite</li>
-                <li>GraphQL</li>
+                <li>Heroku</li>
               </ol></td>
             </tr>
           </table>
