@@ -1,0 +1,14 @@
+SQL Concerns:
+SQL Injections - Input something in the field that gets interpreted as a query
+SELECT * FROM users WHERE username = 'username' AND password = 'password'
+becomes
+SELECT * FROM users WHERE username = 'username' AND password = 'password = '1' OR '1' = '1'
+if we enter
+username = username
+password = 1' OR '1' = '1
+Will return a column and pass verification
+
+Race Conditions - If multiple queries run simultaneously or close to each other, the updates get desynced and reflect wrong values
+If two people try to withdraw $$ from the same bank account at the same time, could end up verifying the amount on both ends and allow both to withdraw that value and put the account into negatives
+Solution is to have transactions (lock DB when running stuff)
+Syntax for it is BEGIN and COMMIT
