@@ -1,7 +1,37 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 1%;
+
+}
+
 h1 {
   text-align: center;
 }
 
-.personal-info {
-  text-align: center;
+table {
+  text-align: left;
+  width: 100%;
+}
+
+#info {
+  background-color: lightgray;
+  padding: 1%;
+}
+
+@media (max-width: 499px) {
+  h2, table {
+    text-align: center;
+    word-wrap: break-word;
+  }
+  body {
+    background-color: lightgray;
+    color: white;
+  }
+  #info {
+    background-color: darkgray;
+    padding: 1%;
+  }
 }
