@@ -4,7 +4,7 @@ html {
 
 body {
   margin: 1%;
-
+  background-color: lightgray;
 }
 
 h1 {
@@ -13,25 +13,63 @@ h1 {
 
 table {
   text-align: left;
-  width: 100%;  
+  width: 100%;
+  padding-top: 1px;
 }
 
 #info {
   background-color: lightgray;
-  padding: 1%;
 }
 
-@media (max-width: 499px) {
+.title {
+  background-color: lightblue;
+  text-align: center;
+  padding: 1px;
+}
+
+.details {
+  text-align: center;
+}
+
+.container {
+  text-align: left;
+  background-color: lightgray;
+  padding-top: 1px;
+}
+
+.date {
+  text-align: right;
+}
+
+@media (max-width: 899px) {
   h2, table {
     text-align: center;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
   }
   body {
-    background-color: lightgray;
-    color: white;
+    background-color: lightblue;
   }
   #info {
-    background-color: darkgray;
-    padding: 1%;
+    background-color: lightblue;
+  }
+
+  .title {
+    background-color: lightgray;
+    text-align: center;
+    padding: 1px;
+  }
+
+  .details {
+    text-align: center;
+  }
+
+  .container {
+    text-align: left;
+    background-color: lightblue;
+    padding-top: 1px;
+  }
+
+  .date {
+    text-align: right;
   }
 }
