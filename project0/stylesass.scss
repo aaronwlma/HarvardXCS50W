@@ -1,0 +1,33 @@
+$primcolor: lightgreen;
+$lightcolor: lightgray;
+
+%format {
+  font-family: sans-serif;
+  padding: 20px;
+  margin: 20px;
+}
+
+table {
+  @extend %format;
+  background-color:  $lightcolor;
+  margin: auto;
+  width: 95%;
+}
+
+div {
+  div {
+    h1 {
+      @extend %format;
+      background-color: $primcolor;
+      text-align: center;
+    }
+    h2 {
+      @extend %format;
+      background-color: $primcolor;
+      text-align: center;
+    }
+    .date {
+      text-align: right;
+    }
+  }
+}
