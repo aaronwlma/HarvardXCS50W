@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block headertitle %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Book Review Website</h1>
+            <p>Logged in as: asdf</p>
+            <a href = "/">Return to Home</a>
+            <h2>{% block bodytitle %}{% endblock %}</h2>
+        </div>
+        <div class="container">
+          {% block body %}
+          {% endblock %}
+        </div>
+    </body>
+</html>
