@@ -6,14 +6,15 @@
     </head>
     <body>
         <div class="container">
-            <h1>Book Review Website</h1>
-            <p>Logged in as: asdf</p>
-            <a href = "/">Return to Home</a>
+            <h1>ReviewBook</h1>
             <h2>{% block bodytitle %}{% endblock %}</h2>
         </div>
         <div class="container">
           {% block body %}
           {% endblock %}
         </div>
+        <div class="container">
+          {% block footer %}
+          {% endblock %}
     </body>
 </html>

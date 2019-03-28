@@ -11,12 +11,13 @@ import_file = "books.csv"
 def main():
     f = open(import_file)
     reader = csv.reader(f)
-    print(reader)
-    # for origin, destination, duration in reader:
-    #     db.execute("INSERT INTO flights (origin, destination, duration) VALUES (:origin, :destination, :duration)",
-    #                 {"origin": origin, "destination": destination, "duration": duration})
-    #     print(f"Added flight from {origin} to {destination} lasting {duration} minutes.")
-    # db.commit()
+    next(reader)
+    for isbn, title, author, year in reader:
+        # print(isbn, title, author, year)
+        db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",
+                    {"isbn": isbn, "title": title, "author": author, "year": year})
+        print("Added book", isbn, title)
+    db.commit()
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block headertitle %}
+  Home
+{% endblock %}
+
+{% block bodytitle %}
+  Hi {{ username }}, welcome to your home!
+{% endblock %}
+
+{% block body %}
+  <div>
+    <h3>Search database for books:</h3>
+      <form action="{{ url_for('search') }}" method="post">
+          <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
+          <button>Search</button>
+  </div>
+  <div>
+    <h3>Books reviewed by you:</h3>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <div><a href = "/">Return to Home</a></div>
+  <div><a href = "/attemptlogout">Log out</a></div>
+{% endblock %}

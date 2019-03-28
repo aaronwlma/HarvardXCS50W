@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block headertitle %}
+  Sign Up
+{% endblock %}
+
+{% block bodytitle %}
+  Sign Up
+{% endblock %}
+
+{% block body %}
+  <form action="{{ url_for('createuser') }}" method="post">
+    <div>
+      <h4>Enter desired user name:</h4>
+      <input type="text" placeholder="Username" name="request_username">
+    </div>
+    <div>
+      <h4>Enter desired password:</h4>
+      <input type="password" placeholder="Password" name="request_password">
+    </div>
+    <div>
+      <h4>Enter desired password again:</h4>
+      <input type="password" placeholder="Enter password again" name="repeat_password"></div>
+    <div>
+        <button>Sign Up</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block footer %}
+  <div><a href = "/">Return to Home</a></div>
+{% endblock %}
