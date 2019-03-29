@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block headertitle %}
-  Book
+  Book Info
 {% endblock %}
 
 {% block bodytitle %}
@@ -9,5 +9,59 @@
 {% endblock %}
 
 {% block body %}
-  <h4>Book</h4>
+  <div>
+    <h6>Search database for books:</h6>
+      <form action="{{ url_for('search') }}" method="post">
+          <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
+          <button>Search</button>
+      </form>
+  </div>
+  <div><a href = "/book">See all books</a></div>
+  <div>
+    <h6>Information:</h6>
+    <ul>
+      <li>Title: {{ booktitle }}
+      <li>Author: {{ bookauthor }}</li>
+      <li>Year: {{ bookyear }}</li>
+      <li>ISBN: {{ bookisbn }}</li>
+      <li>GoodReads Average Rating: {{ goodreadsrating }}
+      <li>Number of Reviews on GoodReads: {{ goodreadsnumreview }}
+    </ul>
+  </div>
+  <div>
+    <h6>{{ username }}'s review on ReviewBook:</h6>
+    {% if userevaluated %}
+      <ul>
+        <li>Rating: {{ userrating }}</li>
+        <li>Review: {{ userreview }}</li>
+      </ul>
+    {% else %}
+        <form action="{{ url_for('attemptreview') }}" method="post">
+          <ul>
+            <li>
+              <h6>Rating</h6>
+              <select type="text" name="userrating">
+                <option value=1>1 Star</option>
+                <option value=2>2 Stars</option>
+                <option value=3>3 Stars</option>
+                <option value=4>4 Stars</option>
+                <option value=5>5 Stars</option>
+              </select>
+            </li>
+            <li>
+              <h6>Review:</h6>
+              <textarea type="text" placeholder="Comments" name="userreview" rows="5" cols="50"></textarea>
+              <div>
+                <button>Submit</button>
+              </div>
+            </li>
+          </ul>
+        </form>
+    {% endif %}
+    <h6>What others on ReviewBook think about {{ booktitle }}:</h6>
+    <ul>
+      <li>Number of reviews on ReviewBook: {{ numreviews }}</li>
+      <li>Average rating on ReviewBook: {{ averagerating }}</li>
+    </ul>
+  </div>
 {% endblock %}

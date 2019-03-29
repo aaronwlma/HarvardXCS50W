@@ -6,8 +6,15 @@
     </head>
     <body>
         <div class="container">
-            <h1>ReviewBook</h1>
-            <h2>{% block bodytitle %}{% endblock %}</h2>
+          <h1>ReviewBook</h1>
+            {% if (username != None) %}
+              <div>Currently logged in as: {{ username }}</div>
+              <div><a href = "/">Return to home</a></div>
+              <div><a href = "/attemptlogout">Log out</a></div>
+            {% else %}
+              <div><a href = "/">Return to home</a></div>
+            {% endif %}
+          <h3>{% block bodytitle %}{% endblock %}</h3>
         </div>
         <div class="container">
           {% block body %}

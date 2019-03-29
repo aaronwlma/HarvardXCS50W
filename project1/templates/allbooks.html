@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block headertitle %}
-  Search
+  Books on ReviewBook
 {% endblock %}
 
 {% block bodytitle %}
-  Search
+  Books on ReviewBook
 {% endblock %}
 
 {% block body %}
@@ -18,11 +18,15 @@
   </div>
   <div><a href = "/book">See all books</a></div>
   <div>
-    <h6>Results Found: {{ numresults }}</h6>
+    <h6>Total Books: {{ numresults }}</h6>
     <ul>
       {% for result in results %}
         <li><a href="{{ url_for('book', isbn=result.isbn) }}">{{ result.isbn }}, {{ result.title }}, {{ result.author }}</a></li>
       {% endfor %}
     </ul>
   </div>
+{% endblock %}
+
+{% block footer %}
+  <div><a href = "/">Return to Home</a></div>
 {% endblock %}

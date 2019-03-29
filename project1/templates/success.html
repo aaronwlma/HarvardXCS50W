@@ -10,5 +10,9 @@
 
 {% block body %}
     {{ message }}
-    <a href = "/">Go to my home page</a>
+    {% if newuser %}
+      <div><a href = "/">Click here to go to your new home page.</a></div>
+    {% else %}
+      <div><a href = "/">Return to home page.</a></div>
+    {% endif %}
 {% endblock %}

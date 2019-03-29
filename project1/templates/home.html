@@ -5,22 +5,19 @@
 {% endblock %}
 
 {% block bodytitle %}
-  Hi {{ username }}, welcome to your home!
+  Home
 {% endblock %}
 
 {% block body %}
+<div>
+  <h6>Search database for books:</h6>
+    <form action="{{ url_for('search') }}" method="post">
+        <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
+        <button>Search</button>
+    </form>
+</div>
+<div><a href = "/book">See all books</a></div>
   <div>
-    <h3>Search database for books:</h3>
-      <form action="{{ url_for('search') }}" method="post">
-          <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
-          <button>Search</button>
+    <h6>Books reviewed by you:</h6>
   </div>
-  <div>
-    <h3>Books reviewed by you:</h3>
-  </div>
-{% endblock %}
-
-{% block footer %}
-  <div><a href = "/">Return to Home</a></div>
-  <div><a href = "/attemptlogout">Log out</a></div>
 {% endblock %}
