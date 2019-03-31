@@ -54,8 +54,12 @@ def createuser():
         username = None
         return render_template("error.html", message="Username already exists, please try again.", username=username, signuppage=True)
     db.execute("INSERT INTO users (name, password) VALUES (:name, :password)", {"name": request_username, "password": request_password})
+    user = db.execute("SELECT * FROM users WHERE name = :name", {"name": request_username})
+    for row in user:
+        if row[2] == request_password:
+            session["userid"] = row[0]
+            session["username"] = request_username
     db.commit()
-    session["username"] = request_username
     return render_template("success.html", message="You have successfully signed up.", username=request_username, newuser=True)
 
 @app.route("/attemptlogin", methods=["POST"])
@@ -67,10 +71,11 @@ def attemptlogin():
         username = None
         return render_template("error.html", message="Invalid user name, please sign up first.", username=username)
     # Make sure the password is correct
-    passwords = db.execute("SELECT password FROM users WHERE name = :name", {"name": username})
-    for row in passwords:
-        if row[0] == password:
+    user = db.execute("SELECT * FROM users WHERE name = :name", {"name": username})
+    for row in user:
+        if row[2] == password:
             session["username"] = username
+            session["userid"] = row[0]
             return redirect(url_for('home'))
     username = None
     return render_template("error.html", message="Your password is incorrect, please try again.", username=username)
@@ -79,11 +84,13 @@ def attemptlogin():
 def logout():
    # remove the username from the session if it is there
    session.pop('username', None)
+   session.pop('userid', None)
    return redirect(url_for('index'))
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
     username=session["username"]
+    userid=session["userid"]
     return render_template("home.html", username=username)
 
 @app.route("/search", methods=["GET", "POST"])
@@ -106,9 +113,11 @@ def allbooks():
 @app.route("/book/<string:isbn>", methods=["GET"])
 def book(isbn):
     username=session["username"]
+    userid=session["userid"]
     book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
     if book is None:
         return render_template("error.html", message="Book does not exist in our database.")
+    session["bookid"] = book[0]
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": API_KEY, "isbns": isbn})
     resJson = res.json()
     try:
@@ -122,10 +131,11 @@ def book(isbn):
 
 @app.route("/attemptreview", methods=["POST"])
 def attemptreview():
-    print('hehe2')
+    if session["userid"] == None or session["bookid"] == None:
+        return render_template("error.html", message="User ID or book ID not found, please return to home and try again.")
     userrating = request.form.get("userrating")
     userreview = request.form.get("userreview")
-    print(userrating)
-    print('hehe3')
-    print(userreview)
+    db.execute("INSERT INTO reviews (rating, review, user_id, book_id) VALUES (:rating, :review, :user_id, :book_id)", {"rating": userrating, "review": userreview, "user_id": session["userid"], "book_id": session["bookid"]})
+    db.commit()
+    session["bookid"] = None
     return render_template("success.html", message="Success! Your review has been received and posted to your ReviewBook.")
