@@ -62,10 +62,11 @@
     {% endif %}
   </div>
   <div class="container pb-3">
-    <h6>What others on ReviewBook think about "{{ booktitle }}":</h6>
-    <ul>
-      <li>Number of reviews on ReviewBook: {{ numreviews }}</li>
-      <li>Average rating on ReviewBook: {{ averagerating }}</li>
-    </ul>
+    <h6>{{ numreviews }} reviews with an average rating of {{ averagerating }} on ReviewBook for "{{ booktitle }}":</h6>
+      <ul>
+        {% for result in totalresults %}
+        <li>{{ result.name }}:  "{{ result.review }}" - {{ result.rating }}/5</li>
+        {% endfor %}
+      </ul>
   </div>
 {% endblock %}

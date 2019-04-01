@@ -26,11 +26,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 # export FLASK_DEBUG=1
 # export DATABASE_URL=(INSERT YOUR DATABASE URL HERE)
 
-# Set goodreads to False if you do not have a API Key from GoodReads
-goodreads = True
+# Set goodreads to True if you have a API Key from GoodReads
+goodreads = False
 # if goodreads == True:
 #     # API Key from GoodReads
-#     API_KEY = "(INSERT YOUR API KEY HERE)"
+#     API_KEY = "(INSERT YOUR GOODREADS API KEY HERE)"
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -193,16 +193,17 @@ def book(isbn):
     if len(results) != 0:
         userevaluated = True
     # Display the total number of reviews on the website as well as the average score
-    totalresults = db.execute("SELECT rating FROM reviews JOIN users on users.id = user_id JOIN books on books.id = book_id WHERE reviews.book_id = :bookid", {"bookid": session["bookid"]}).fetchall()
+    totalresults = db.execute("SELECT rating, review, name FROM reviews JOIN users on users.id = user_id JOIN books on books.id = book_id WHERE reviews.book_id = :bookid", {"bookid": session["bookid"]}).fetchall()
     numreviews = len(totalresults)
     totalscore = 0
     for row in totalresults:
+        print(row)
         totalscore += row[0]
     if numreviews == 0:
         averagerating = 'N/A'
     else:
         averagerating = round(totalscore/numreviews, 2)
-    return render_template("book.html", averagerating=averagerating, numreviews=numreviews, userevaluated=userevaluated, results=results, bookisbn=book[1], booktitle=book[2], bookauthor=book[3], bookyear=book[4], goodreadsrating=goodreadsrating, goodreadsnumreview=goodreadsnumreview, username=username)
+    return render_template("book.html", totalresults=totalresults, averagerating=averagerating, numreviews=numreviews, userevaluated=userevaluated, results=results, bookisbn=book[1], booktitle=book[2], bookauthor=book[3], bookyear=book[4], goodreadsrating=goodreadsrating, goodreadsnumreview=goodreadsnumreview, username=username)
 
 @app.route("/attemptreview", methods=["POST"])
 def attemptreview():
