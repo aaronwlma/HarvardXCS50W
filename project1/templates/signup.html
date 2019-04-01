@@ -9,20 +9,22 @@
 {% endblock %}
 
 {% block body %}
-  <form action="{{ url_for('createuser') }}" method="post">
-    <div>
-      <h6>Enter desired user name:</h6>
-      <input type="text" placeholder="Username" name="request_username">
-    </div>
-    <div>
-      <h6>Enter desired password:</h6>
-      <input type="password" placeholder="Password" name="request_password">
-    </div>
-    <div>
-      <h6>Enter desired password again:</h6>
-      <input type="password" placeholder="Enter password again" name="repeat_password"></div>
-    <div>
-        <button>Sign Up</button>
-    </div>
-  </form>
+  <div class="container pb-4">
+    <form action="{{ url_for('createuser') }}" method="post">
+      <div class="container pb-1">
+        <h6>Enter desired user name:</h6>
+        <input type="text" placeholder="Username" name="request_username">
+      </div>
+      <div class="container pb-1">
+        <h6>Enter desired password:</h6>
+        <input type="password" placeholder="Password" name="request_password">
+      </div>
+      <div class="container pb-2">
+        <h6>Enter desired password again:</h6>
+        <input type="password" placeholder="Enter password again" name="repeat_password"></div>
+      <div class="container pb-1">
+          <button>Sign Up</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

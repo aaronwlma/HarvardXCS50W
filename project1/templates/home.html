@@ -9,19 +9,27 @@
 {% endblock %}
 
 {% block body %}
-<div>
+<div class="container pb-4">
   <h6>Search database for books:</h6>
     <form action="{{ url_for('search') }}" method="post">
         <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
         <button>Search</button>
     </form>
+    <div><a href = "/book">See all books</a></div>
 </div>
-<div><a href = "/book">See all books</a></div>
-<div>
-  <h6>{{ numbooks }} Books reviewed by you:</h6>
+<div class="container pb-4">
+  {% if numbooks == 1 %}
+    <h6>{{ numbooks }} book reviewed by you:</h6>
+  {% else %}
+    <h6>{{ numbooks }} books reviewed by you:</h6>
+  {% endif %}
   <ul>
     {% for result in results %}
-      <li><a href="{{ url_for('book', isbn=result.isbn) }}">{{ result.isbn }}, {{ result.title }}, {{ result.author }}</a></li>
+      <li><a href="{{ url_for('book', isbn=result.isbn) }}">{{ result.author }}, {{ result.title }}</a></li>
+        <ul>
+          <li>Rating: {{ result.rating }}/5</li>
+          <li>Review: {{ result.review }}</li>
+        </ul>
     {% endfor %}
   </ul>
 </div>

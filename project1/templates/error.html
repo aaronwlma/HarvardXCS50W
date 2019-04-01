@@ -9,11 +9,12 @@
 {% endblock %}
 
 {% block body %}
+  <div class="container pb-4">
     {{ message }}
     {% if signuppage %}
       <div><a href = "/signup">Click here to return to the sign up page.</a></div>
     {% else %}
       <div><a href = "/">Click here to return to the login page.</a></div>
     {% endif %}
-
+  </div>
 {% endblock %}

@@ -9,15 +9,16 @@
 {% endblock %}
 
 {% block body %}
-  <div>
+  <div class="container pb-4">
     <h6>Search database for books:</h6>
       <form action="{{ url_for('search') }}" method="post">
           <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
           <button>Search</button>
       </form>
+      <div><a href = "/book">See all books</a></div>
   </div>
-  <div><a href = "/book">See all books</a></div>
-  <div>
+
+  <div class="container pb-4">
     <h6>Total Books: {{ numresults }}</h6>
     <ul>
       {% for result in results %}

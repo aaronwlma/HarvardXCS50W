@@ -5,22 +5,22 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     </head>
     <body>
-        <div class="container">
+        <div class="container pt-4 pb-5">
           <h1>ReviewBook</h1>
             {% if (username != None) %}
-              <div>Currently logged in as: {{ username }}</div>
+              <div class="pb-2">Currently logged in as: {{ username }}</div>
               <div><a href = "/">Return to home</a></div>
               <div><a href = "/attemptlogout">Log out</a></div>
             {% else %}
               <div><a href = "/">Return to home</a></div>
             {% endif %}
-          <h3>{% block bodytitle %}{% endblock %}</h3>
         </div>
         <div class="container">
+          <h3 class="pb-3">{% block bodytitle %}{% endblock %}</h3>
           {% block body %}
           {% endblock %}
         </div>
-        <div class="container">
+        <div class="container pt-3 pb-5">
           {% block footer %}
           {% endblock %}
     </body>

@@ -9,15 +9,15 @@
 {% endblock %}
 
 {% block body %}
-  <div>
+  <div class="container pb-4">
     <h6>Search database for books:</h6>
       <form action="{{ url_for('search') }}" method="post">
           <input type="text" placeholder="Title, Author, or ISBN" name="bookinfo">
           <button>Search</button>
       </form>
+      <div><a href = "/book">See all books</a></div>
   </div>
-  <div><a href = "/book">See all books</a></div>
-  <div>
+  <div class="container pb-3">
     <h6>Information:</h6>
     <ul>
       <li>Title: {{ booktitle }}
@@ -28,13 +28,15 @@
       <li>Number of Reviews on GoodReads: {{ goodreadsnumreview }}
     </ul>
   </div>
-  <div>
+  <div class="container pb-3">
     <h6>{{ username }}'s review on ReviewBook:</h6>
     {% if userevaluated %}
+      {% for result in results %}
       <ul>
-        <li>Rating: {{ userrating }}</li>
-        <li>Review: {{ userreview }}</li>
+        <li>Rating: {{ result.rating }}/5</li>
+        <li>Review: {{ result.review }}</li>
       </ul>
+      {% endfor %}
     {% else %}
         <form action="{{ url_for('attemptreview') }}" method="post">
           <ul>
@@ -58,7 +60,9 @@
           </ul>
         </form>
     {% endif %}
-    <h6>What others on ReviewBook think about {{ booktitle }}:</h6>
+  </div>
+  <div class="container pb-3">
+    <h6>What others on ReviewBook think about "{{ booktitle }}":</h6>
     <ul>
       <li>Number of reviews on ReviewBook: {{ numreviews }}</li>
       <li>Average rating on ReviewBook: {{ averagerating }}</li>

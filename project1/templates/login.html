@@ -9,20 +9,22 @@
 {% endblock %}
 
 {% block body %}
-  <form action="{{ url_for('attemptlogin') }}" method="post">
-    <div>
-      <input type="text" placeholder="Username" name="username">
-    </div>
-    <div>
-      <input type="password" placeholder="Password" name="password">
-    </div>
-    <div>
-      <button>Login</button>
-    </div>
-  </form>
-  <form action="{{ url_for('signup') }}" method="post">
-    <div>
-      <button>Sign Up</button>
-    </div>
-  </form>
+  <div class="container pb-4">
+    <form action="{{ url_for('attemptlogin') }}" method="post">
+      <div class="container pb-1">
+        <input type="text" placeholder="Username" name="username">
+      </div>
+      <div class="container pb-2">
+        <input type="password" placeholder="Password" name="password">
+      </div>
+      <div class="container pb-1">
+        <button>Login</button>
+      </div>
+    </form>
+    <form action="{{ url_for('signup') }}" method="post">
+      <div class="container pb-1">
+        <button>Sign Up</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}
