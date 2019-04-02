@@ -7,13 +7,17 @@ This project was created in fulfillment of HarvardX's "CS50W: Web Programming wi
 The resulting webpage can be viewed by pulling this repository, installing the requirements, and launching Flask.  
 
 1.  First, requirements.txt needs to be installed.  This can be done with the following terminal command in the repository folder:
-'pip3 install -r requirements.txt'
+```
+pip3 install -r requirements.txt
+```
 2.  Once the requirements are installed, a PostgreSQL database location needs to be created.  In this project, a PostgreSQL database was hosted on Heroku, and a database URL was generated.  This database URL is required in order to store the website data.
 
 3.  Once the requirements are installed and a database URL was obtained, the computer environment variables need to be set.  This can be done with the following terminal command in the repository folder:
-'''export FLASK_APP=application.py
+```
+export FLASK_APP=application.py
 export FLASK_DEBUG=1
-export DATABASE_URL=(INSERT YOUR DATABASE URL HERE)'''
+export DATABASE_URL=(INSERT YOUR DATABASE URL HERE)
+```
 Do note that the user must put their own database URL in the statement above for the website application to work.
 
 Once these requirements
