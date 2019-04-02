@@ -13,7 +13,7 @@
 import os
 import requests
 
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -197,7 +197,6 @@ def book(isbn):
     numreviews = len(totalresults)
     totalscore = 0
     for row in totalresults:
-        print(row)
         totalscore += row[0]
     if numreviews == 0:
         averagerating = 'N/A'
@@ -223,3 +222,37 @@ def attemptreview():
     session["bookid"] = None
     # Produce success page if the query succeeds
     return render_template("success.html", message="Success! Your review has been received and posted to your ReviewBook.", tobook=True)
+
+@app.route("/api/<string:isbn>")
+def isbn_api(isbn):
+    # Query for relevant information to return in API
+    results = db.execute("SELECT rating, isbn, title, author, year FROM reviews JOIN books on books.id = book_id WHERE books.isbn = :isbn", {"isbn": isbn}).fetchall()
+
+    # Verify that the requested ISBN exists
+    if len(results) == 0:
+        return jsonify({"error": "Invalid isbn"}), 422
+
+    # Retrieve the website's relevant information to return
+    title = results[0][2]
+    author = results[0][3]
+    year = results[0][4]
+
+    # Calculate the website's relevant information to return
+    numreviews = len(results)
+    totalscore = 0
+    for row in results:
+        totalscore += row[0]
+    if numreviews == 0:
+        averagerating = 0
+    else:
+        averagerating = round(totalscore/numreviews, 1)
+
+    # Return json response with the relevant information
+    return jsonify({
+        "title": title,
+        "author": author,
+        "year": year,
+        "isbn": isbn,
+        "review_count": numreviews,
+        "average_score": averagerating
+        })
