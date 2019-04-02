@@ -1,5 +1,4 @@
-# Project 1 - ReviewBook
-## Website for Reviewing and Rating Books
+# Project 1 - ReviewBook: Website for Reviewing and Rating Books
 
 This project was created in fulfillment of HarvardX's "CS50W: Web Programming with Python and JavaScript" course on edX.  The project is a book review webpage that allows users to sign up, view, and write reviews for books on the website database.  The project was written in Python with the database constructed with PostgreSQL, and the contents were displayed using HTML.  Additional notable tools and languages used in this project were Flask, Heroku, and SQLAlchemy.  The primary objective of the project was to create a dynamic webpage built on Python using Flask.
 
@@ -53,7 +52,7 @@ Passwords are stored as plain text in the PostgreSQL database.  With proper SQL 
 
 This project--creating a dynamic webpage using Python with Flask--allowed me to have a detailed understanding of how dynamic websites function.  I learned how to set up a SQL database, create a website that interfaces with this database, and deploy a webpage that allows users to interact with the database.  This is a valuable tool to have in the future, when I have other projects that I would like to use APIs to set up a simple dynamic website.  I also learned more about Python conventions and syntax.  I found that I while I get excited for writing the functions for the website, I do not get excited for setting up the environment for the website to run.  Overall, the project allowed me to exercise a broad range of skills related to web programming.  I exercised SQL database design and queries, Python programming for webpages, and adapting new tools to use in website deployment.  However, I did not particularly enjoy making sure my local files met the requirements to run the website.  In the future, when I create webpages to show case my projects, I will likely try to use as few tools with dependencies as possible to allow for my webpage to be self-contained.  
 
-### Exercised Skills/Tools/Languages
+## Exercised Skills/Tools/Languages
 - Python
 - PostgreSQL
 - HTML
