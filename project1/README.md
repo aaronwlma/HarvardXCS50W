@@ -1,4 +1,5 @@
-# Project 1 - ReviewBook: Website for Reviewing and Rating Books
+# Project 1 - ReviewBook
+## Website for Reviewing and Rating Books
 
 This project was created in fulfillment of HarvardX's "CS50W: Web Programming with Python and JavaScript" course on edX.  The project is a book review webpage that allows users to sign up, view, and write reviews for books on the website database.  The project was written in Python with the database constructed with PostgreSQL, and the contents were displayed using HTML.  Additional notable tools and languages used in this project were Flask, Heroku, and SQLAlchemy.  The primary objective of the project was to create a dynamic webpage built on Python using Flask.
 
@@ -20,47 +21,40 @@ export DATABASE_URL=(INSERT YOUR DATABASE URL HERE)
 ```
 Do note that the user must put their own database URL in the statement above for the website application to work.
 
-Once these requirements
+Once these requirements are met, running Flask will deploy the webpage to a local host.  Note that in order to enable data from GoodReads, the user must acquire their own GoodReads API key and insert the key in application.py.  Data from GoodReads is disabled by default, and is not part of the requirement for the website to run.
 
 ## Webpage Details
 
-The following notes details what each webpage consists of and how they were created.
+The following notes details key components in the repository and how they relate to the webpage.
 
-### application.py
+#### application.py
 
-This is the home page of the resume.  It has simple headers with a form that allows the users to select one of many different generated resumes.  On pressing the "Go" button, the received input from the form is processed by a short JavaScript that launches the associated webpage.  GitHub's native CSS styling was imported, and an additional CSS file (indexstyle.css) was included to tweak the style to fit to taste.
+This is backbone of the webpage.  It contains definitions and all possible website URL routes and how to handle them.  Note that to enable data from GoodReads, `goodreads=False` should be set to `True` in this file.
 
-### import.py
+Each app route addresses either generating a webpage, a JSON response, or conducting a check.  For the app routes generating webpages, each function associated with the app route first collects the required data.  This may be the username, password, or book id. Once the information is verified or stored in a session, the information is rendered in a template that is preset in an html template file.  For the app route that generates a JSON response, the function takes in an input isbn, and retrieves data from the PostgreSQL database for the user and returns the information as a JSON response.  Lastly, for the app routes that conduct checks, these app routes check and update the PostgreSQL database with new information, and if it returns successful, it will generate a success html page that is also from a html template.  If it proves unsuccessful, these app routes will return error pages with the proper information.
 
-This is the resume as pure HTML.  No CSS styling was applied.  The bare bone resume is a series of divisions with rows and tables, tagged as needed.
+#### import.py
 
-### cvcust.html
+This is the script that takes a books CSV and inputs the information into the PostgreSQL database hosted on Heroku.  The script reads in the CSV file and loops through each value to insert into the database.
 
-This is the resume with custom CSS applied.  The page is identical to cv.html, except a stylesheet was imported as a reference.  This CSS stylesheet (personalstyles.css) was written from scratch.  The objective of this style wasn't to create and aesthetically pleasing page, rather, the objective was to exercise sufficient CSS styling until I was comfortable with how CSS affects HTML.  As such, a media query was added to invert the colors once the webpage was smaller than 899px.  Additionally, styles were added to IDs, classes, and tags to see how the styling affected one another.
+#### create.sql
 
-### cvboot.html
+This is the queries sent to the database to create the proper database tables and relations to support the website.
 
-This is the resume with Bootstrap CSS styling applied in accordance to the requirements of the project.  The objective was to take advantage of the classes built into Bootstrap CSS.  As a result, the HTML for this resume has newly defined classes that allow us to set the size of columns.  Because of the built-in styling in Bootstrap, the resulting resume is tragically more elegant when compared to my personally generated CSS..
+#### templates/.html
 
-### cvgithub.html
-
-This is the resume with GitHub's CSS styling applied.  It was not part of the requirements of the project, but I wanted to apply a CSS style to a bare bone HTML file to get an elegant looking webpage swiftly.
-
-### cvsass.html
-
-This is the resume with CSS styling generated by SASS.  The CSS (stylesass.css) was created by writing a .scss file (stylesass.scss) using SASS syntax and generating the CSS using the SASS tool.  The three main objectives of this exercise was to utilize inheritance, nesting, and variables to allow quick changes to the CSS style.
+These are the html templates corresponding to the webpage.  The proper html template is called using render_template in the application.py script.  Conditions using Jinja2 were also introduced in the templates to display the proper information depending on various situations.  All the html templates extend layout.html, which is the parent layout for the website that specifies the CSS stylesheet for the webpage.
 
 ## Places to Improve
 
-While the index page as well as the CV pages have CSS styling applied to them, the hyperlinks to detailed descriptions of each item are still in HTML only.  Styling could be applied to those pages to create an overall more aesthetically resume webpage.  Also, because this project aimed to practice different approaches to styling HTML, the HTML base file changes slightly for each theme.  The next time I write an HTML page, I will be conscious of the structure of and tags in the HTML to allow seamless styling transitions if needed.
+Passwords are stored as plain text in the PostgreSQL database.  With proper SQL injection, a password can be retrieved in plain text.  For security reasons, it would be best to protect this information.  Also, the variable naming in this project did not adhere to Python conventional syntax.  In the future, naming variables spaced with underscores will be ideal.  Additionally, the project uses a number of SQL queries to retrieve and update data to the database.  In the future, it may be cleaner and simpler to use object relational mapping to manipulate database information.  This would allow for quicker implementation of new functionality to the website as well.
 
 ## Concluding Remarks
 
-This project--creating a webpage with styling from scratch--allowed me to have a detailed overview of the front-end of web programming.  I learned how to take write an HTML page from scratch, and deploy the page as a webpage on GitHub pages.  This is a valuable tool to have in the future, when I have other projects that I would like to share with the community.  I also learned how to stylize webpages using CSS.  I found that I while I get excited for creating a webpage, I do not get excited for styling one.  In the future, when I create webpages to show case my projects, I will likely import CSS styling to my HTML page to make the information presentable, as I found the act of writing CSS from scratch to be particularly tedious.  Overall, the project allowed me to exercise a broad range of skills related to web programming, and I think I have better understood what kind of programming I get excited over.
+This project--creating a dynamic webpage using Python with Flask--allowed me to have a detailed understanding of how dynamic websites function.  I learned how to set up a SQL database, create a website that interfaces with this database, and deploy a webpage that allows users to interact with the database.  This is a valuable tool to have in the future, when I have other projects that I would like to use APIs to set up a simple dynamic website.  I also learned more about Python conventions and syntax.  I found that I while I get excited for writing the functions for the website, I do not get excited for setting up the environment for the website to run.  Overall, the project allowed me to exercise a broad range of skills related to web programming.  I exercised SQL database design and queries, Python programming for webpages, and adapting new tools to use in website deployment.  However, I did not particularly enjoy making sure my local files met the requirements to run the website.  In the future, when I create webpages to show case my projects, I will likely try to use as few tools with dependencies as possible to allow for my webpage to be self-contained.  
 
 ### Exercised Skills/Tools/Languages
-- HTML/CSS
-- JavaScript
-- Git/GitHub Pages
-- SASS
-- Bootstrap
+- Python
+- PostgreSQL
+- HTML
+- Flask
