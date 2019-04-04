@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chats
+    <div class="pb-2">Currently chatting as: {{ session["login_name"] }}</div>
+    <div><a href="/attempt_logout">Leave Flack</a></div>
+{% endblock %}
+
+{% block bodytitle %}
+  Chats
+{% endblock %}
+
+{% block body %}
+  <div class="container pb-4">
+    <h6>Online Users:</h6>
+    <ul id="#onlineusers"></ul>
+    <h6>Available Chats:</h6>
+  </div>
+{% endblock %}

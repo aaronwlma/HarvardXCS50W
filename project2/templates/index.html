@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-        <script src="{{ url_for('static', filename='index.js') }}"></script>
-        <title>Flack</title>
-    </head>
-    <body>
-        Hi
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block bodytitle %}
+  Login
+{% endblock %}
+
+{% block body %}
+  <div class="container pb-4">
+    <h6>Choose a display name to begin conversations in our chat rooms:</h6>
+    <form id="login" action="{{ url_for('attempt_login') }}" method="post">
+        <input id="name" type="text" placeholder="Name" name="login_name" autofocus>
+        <input type="submit" placeholder="Go Chat!">
+    </form>
+  </div>
+{% endblock %}

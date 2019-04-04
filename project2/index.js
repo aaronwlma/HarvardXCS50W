@@ -1,7 +1,7 @@
 chooseName()
 
 function chooseName() {
-  var person = prompt("Welcome to Flack! Please enter a display name:", "");
+  var person = prompt("Please enter your name:", "");
   if (person == null || person == "") {
     chooseName();
   }
