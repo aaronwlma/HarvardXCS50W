@@ -22,11 +22,11 @@ chatrooms = []
 def index():
     if session.get("login_name") is None:
         return render_template("index.html")
-    return redirect(url_for('chats'))
+    return redirect(url_for('flack'))
 
-@app.route("/chats")
-def chats():
-    return render_template("chats.html")
+@app.route("/flack")
+def flack():
+    return render_template("flack.html")
 
 @app.route("/attempt_login", methods=["POST"])
 def attempt_login():

@@ -1,15 +1,12 @@
 {% extends "layout.html" %}
 
-{% block bodytitle %}
-  Login
-{% endblock %}
-
 {% block body %}
   <div class="container pb-4">
     <h6>Choose a display name to begin conversations in our chat rooms:</h6>
     <form id="login" action="{{ url_for('attempt_login') }}" method="post">
-        <input id="name" type="text" placeholder="Name" name="login_name" autofocus>
+        <input id="login_name" type="text" placeholder="Name" name="login_name" autofocus>
         <input type="submit" placeholder="Go Chat!">
     </form>
   </div>
 {% endblock %}
+ 
