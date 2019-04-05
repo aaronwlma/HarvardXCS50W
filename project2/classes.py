@@ -44,7 +44,7 @@ class User:
             # don't attempt to compare against unrelated types
             return NotImplemented
         return self.username == other.username and self.chats == other.chats
-        
+
 class Message:
 
     counter = 1
