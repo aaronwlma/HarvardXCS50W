@@ -1,24 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
+if (localStorage.getItem('name') == null || localStorage.getItem('name') == '') {
+  promptName();
+}
 
-    // Connect to websocket
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+function promptName() {
+  var name = prompt("Welcome to Flack! Please enter your name:");
+  if (name == null || name == "") {
+    promptName();
+  };
+  localStorage.setItem('name', name);
+  var element = document.getElementById('name');
+  element.innerHTML = name;
+};
 
-    // When connected, configure buttons
-    socket.on('connect', () => {
+function logout() {
+  localStorage.clear('name');
+  alert('Cleared local storage');
+}
 
-        // Each button should emit a "submit vote" event
-        document.querySelectorAll('button').forEach(button => {
-            button.onclick = () => {
-                const selection = button.dataset.vote;
-                socket.emit('submit vote', {'selection': selection});
-            };
-        });
-    });
 
-    // When a new vote is announced, add to the unordered list
-    socket.on('vote totals', data => {
-        document.querySelector('#yes').innerHTML = data.yes;
-        document.querySelector('#no').innerHTML = data.no;
-        document.querySelector('#maybe').innerHTML = data.maybe;
-    });
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//
+//
+// });
