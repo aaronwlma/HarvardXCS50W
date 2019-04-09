@@ -7,6 +7,14 @@ function promptName() {
   if (name == null || name == "") {
     promptName();
   } else {
+    // checkName(name);
     localStorage.setItem('name', name);
   };
 };
+
+function checkName(name) {
+  // let users = {{ users }};
+  if (users.includes(name)) {
+    promptName();
+  };
+}

@@ -16,6 +16,22 @@ Session(app)
 if __name__ == '__main__':
     socketio.run(app)
 
+users = []
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    print(users)
+    return render_template("index.html", users=users)
+
+@socketio.on("login")
+def login(user):
+    if user not in users:
+        users.append(user)
+        print(users)
+        emit("announce login", {"users": users}, broadcast=True)
+
+@socketio.on("logout")
+def logout(user):
+    users.remove(user)
+    print(users)
+    emit("announce logout", {"users": users}, broadcast=True)
