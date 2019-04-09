@@ -1,24 +1,14 @@
-if (localStorage.getItem('name') == null || localStorage.getItem('name') == '') {
-  promptName();
-}
-
-function promptName() {
-  var name = prompt("Welcome to Flack! Please enter your name:");
-  if (name == null || name == "") {
-    promptName();
-  };
-  localStorage.setItem('name', name);
-  var element = document.getElementById('name');
-  element.innerHTML = name;
-};
+var name = localStorage.getItem('name');
+var element = document.getElementById('name');
+element.innerHTML = 'Hi ' + name + ', welcome to Flack!';
 
 function logout() {
   localStorage.clear('name');
-  alert('Cleared local storage');
-}
+  alert('Logged out!');
+  document.location.reload();
+};
+
+document.addEventListener('DOMContentLoaded', function() {
 
 
-// document.addEventListener('DOMContentLoaded', function() {
-//
-//
-// });
+});
