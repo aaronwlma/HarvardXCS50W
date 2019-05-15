@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flack</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="{{ url_for('static', filename='check.js') }}"></script>
+        <link rel="icon" href="data:,">
+    </head>
+
+    <body>
+        <div class="container pt-3">
+          <h1>Flack</h1>
+          <h6 id="name"></h6>
+          <p>Join a chat room to begin chatting...or make your own!</p>
+          <button id="logout" onclick="logout()">Logout</button>
+          <hr>
+          <script src="{{ url_for('static', filename='index.js') }}"></script>
+        </div>
+        <div class="container pt-3">
+          <h5>Online Users:</h5>
+          <ul id="online-users"></ul>
+        </div>
+    </body>
+{{ users }}
+</html>
