@@ -1,6 +1,9 @@
 // Variables to use in the script that manages what is displayed on the page
 var name = localStorage.getItem('name');
 var element = document.getElementById('name');
+var date = new Date();
+var timestamp = date.getTime();
+var timestampUTC = (new Date(timestamp)).toUTCString();
 
 // Functions defined to be used in the listeners
 function promptName() {
@@ -38,9 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
       };
   });
 
-  // By default, submit button is disabled
+  // Logic for message box for chat
   document.querySelector('#submit').disabled = true;
-
   // Enable button only if there is text in the input field
   document.querySelector('#message').onkeyup = () => {
       if (document.querySelector('#message').value.length > 0)
@@ -49,11 +51,12 @@ document.addEventListener('DOMContentLoaded', function() {
           document.querySelector('#submit').disabled = true;
   };
 
+  // Logic for submitting a message to the server
   document.querySelector('#new-message').onsubmit = () => {
 
       // Create new item for list
       const li = document.createElement('li');
-      li.innerHTML = name + ": " + document.querySelector('#message').value;
+      li.innerHTML = "[" + timestampUTC + "] " + name + ": " + document.querySelector('#message').value;
 
       // Add new item to task list
       document.querySelector('#messages').append(li);

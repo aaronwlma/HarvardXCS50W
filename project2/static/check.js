@@ -1,13 +1,13 @@
 var name = localStorage.getItem('name');
 var element = document.getElementById('name');
 
-if (name == null || name == '' || name = 'null') {
+if (name == null || name == '' || name == 'null') {
   promptName();
 }
 
 function promptName() {
   var name = prompt("Welcome to Flack! Please enter your name:");
-  if (name == null || name == '' || name = 'null') {
+  if (name == null || name == '' || name == 'null') {
     promptName();
   } else {
     localStorage.setItem('name', name);

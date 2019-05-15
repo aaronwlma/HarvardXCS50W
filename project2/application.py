@@ -36,3 +36,5 @@ def logout(user):
         users.remove(user)
         print(users)
         emit("announce logout", {"users": users}, broadcast=True)
+
+# LOGIN AND LOGOUT TO SERVER WORK RIGHT NOW, EXCEPT THAT NULL CAN GET THROUGH SOMEHOW.  TRY TO GET THAT GONE
