@@ -9,6 +9,7 @@
 
     <body>
       <script type="text/javascript" src="{{ url_for('static', filename='check.js') }}"></script>
+
       <div class="container pt-3">
         <h1>Flack</h1>
         <h6 id="name"></h6>
@@ -18,13 +19,19 @@
       </div>
 
       <div class="container pt-3">
-        <ul id="messages">
-        </ul>
+        <ul id="messages"></ul>
         <form id="new-message">
             <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
             <input id="submit" type="submit">
         </form>
+        <hr>
       </div>
+
+      <div class="container pt-3">
+        <h5>Online Users:</h5>
+        <ul id="online-users"></ul>
+      </div>
+
       <script type="text/javascript" src="{{ url_for('static', filename='page.js') }}"></script>
     </body>
 </html>

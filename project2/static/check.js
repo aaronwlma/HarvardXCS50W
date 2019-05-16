@@ -10,6 +10,7 @@ function promptName() {
   if (name == null || name == '' || name == 'null') {
     promptName();
   } else {
+    // checkName(name);
     localStorage.setItem('name', name);
   };
 };
@@ -29,3 +30,19 @@ document.addEventListener('DOMContentLoaded', function() {
     element.innerHTML = 'Hi ' + name + ', welcome to Flack!';
   });
 });
+
+// Check server to make sure name is not in use
+// function checkName(name) {
+//   // let users = {{ users }};
+//   if (users.includes(name)) {
+//     promptName();
+//   };
+// }
+
+// function checkName(name) {
+//   let users = {{ users }};
+//   if (users.includes(name)) {
+//     alert('Sorry, name is already in use. Please try again.');
+//     document.location.reload();
+//   };
+// };

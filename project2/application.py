@@ -20,7 +20,6 @@ users = []
 
 @app.route("/")
 def index():
-    print(users)
     return render_template("index.html", users=users)
 
 @socketio.on("login")
@@ -28,13 +27,18 @@ def login(user):
     if user not in users:
         users.append(user)
         print(users)
-        emit("announce login", {"users": users}, broadcast=True)
+        emit("announce login", users, broadcast=True)
 
 @socketio.on("logout")
 def logout(user):
     if user in users:
         users.remove(user)
         print(users)
-        emit("announce logout", {"users": users}, broadcast=True)
+        emit("announce logout", users, broadcast=True)
 
-# LOGIN AND LOGOUT TO SERVER WORK RIGHT NOW, EXCEPT THAT NULL CAN GET THROUGH SOMEHOW.  TRY TO GET THAT GONE
+@socketio.on("submit comment")
+def comment(data):
+    print(data)
+    emit("announce comment", data, broadcast=True)
+
+# WORKS, BUT ONLINE USERS DONT LOAD ON REFRESH, NEED THAT WORKING FOR MODEL FOR CHAT

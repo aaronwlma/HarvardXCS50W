@@ -23,14 +23,6 @@ function addUser() {
   document.querySelector('#online-users').append(li);
 };
 
-// function checkName(name) {
-//   let users = {{ users }};
-//   if (users.includes(name)) {
-//     alert('Sorry, name is already in use. Please try again.');
-//     document.location.reload();
-//   };
-// };
-
 function logout() {
   localStorage.clear('name');
   alert('Logged out!');
