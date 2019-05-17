@@ -11,9 +11,19 @@ function promptName() {
   if (name == null || name == "" || name == 'null') {
     promptName();
   } else {
+    // checkName(name);
     localStorage.setItem('name', name);
   };
 };
+
+// Check server to make sure name is not in use
+// function checkName(name) {
+//   let users = {{ users }};
+//   if (users.includes(name)) {
+//     alert('Sorry, name is already in use. Please try again.');
+//     document.location.reload();
+//   };
+// };
 
 // Listener that dynamic adjusts page content
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
   socket.on('connect', function() {
     if (name == null || name == '' || name == 'null') {
       promptName();
-    }
+    };
+    socket.emit('get userlist')
     const user = name;
-    socket.emit('login', user);
     element.innerHTML = 'Hi ' + user + ', welcome to Flack!';
   });
 
@@ -41,18 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
       };
   });
 
-  // Logic to update online users list when logging in and out
-  socket.on('announce login', users => {
-    const user = document.createElement('li');
-    user.innerHTML = users;
-    document.querySelector('#online-users').innerHTML = user.innerHTML;
-  });
-  socket.on('announce logout', users => {
-    const user = document.createElement('li');
-    user.innerHTML = users;
-    document.querySelector('#online-users').innerHTML = user.innerHTML;
-  });
-
   // Logic for message box for chat
   document.querySelector('#submit').disabled = true;
   // Enable button only if there is text in the input field
@@ -65,16 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Logic for submitting a message to the server
   document.querySelector('#new-message').onsubmit = () => {
-
       // Create new item for list and submit to server
       const comment = document.createElement('li');
       comment.innerHTML = "[" + timestampUTC + "] " + name + ": " + document.querySelector('#message').value;
       socket.emit('submit comment', comment.innerHTML);
-
       // Clear input field and disable button again
       document.querySelector('#message').value = '';
       document.querySelector('#submit').disabled = true;
-
       // Stop form from submitting
       return false;
   };
@@ -85,4 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
     comment.innerHTML = data;
     document.querySelector('#messages').append(comment);
   });
+
+  // When the user list is announced, update the user list on the web page
+  socket.on('announce userlist', users => {
+    var list = '';
+    for (const user of users) {
+      const name = '<li>' + user + '</li>';
+      list = list.concat(name);
+    };
+    document.querySelector('#online-users').innerHTML = list;
+  });
+
 });

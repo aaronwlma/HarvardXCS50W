@@ -27,14 +27,19 @@ def login(user):
     if user not in users:
         users.append(user)
         print(users)
-        emit("announce login", users, broadcast=True)
+        emit("announce userlist", users, broadcast=True)
 
 @socketio.on("logout")
 def logout(user):
     if user in users:
         users.remove(user)
         print(users)
-        emit("announce logout", users, broadcast=True)
+        emit("announce userlist", users, broadcast=True)
+
+@socketio.on("get userlist")
+def userlist():
+    print(users)
+    emit("announce userlist", users, broadcast=True)
 
 @socketio.on("submit comment")
 def comment(data):
