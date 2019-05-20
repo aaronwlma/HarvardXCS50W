@@ -13,6 +13,10 @@ class Chat:
         self.users.append(user)
         user.chats.append(self)
 
+    def remove_user(self, user):
+        self.users.remove(user)
+        user.chats.append(self)
+
     def add_message(self, user, message):
         self.user = user
         self.messages.append(message)

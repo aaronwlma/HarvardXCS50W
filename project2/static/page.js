@@ -1,20 +1,20 @@
 // Variables to use in the script that manages what is displayed on the page
-var name = localStorage.getItem('name');
-var element = document.getElementById('name');
-var date = new Date();
-var timestamp = date.getTime();
-var timestampUTC = (new Date(timestamp)).toUTCString();
-
-// Functions defined to be used in the listeners
-function promptName() {
-  var name = prompt("Welcome to Flack! Please enter your name:");
-  if (name == null || name == "" || name == 'null') {
-    promptName();
-  } else {
-    // checkName(name);
-    localStorage.setItem('name', name);
-  };
-};
+// var name = localStorage.getItem('name');
+// var chat = localStorage.getItem('chat');
+// var element = document.getElementById('name');
+//
+// // Functions defined to be used in the listeners
+// function promptName() {
+//   var name = prompt("Welcome to Flack! Please enter your name:");
+//   if (name == null || name == "" || name == 'null') {
+//     promptName();
+//   } else {
+//     // checkName(name);
+//     var chat = 'globalChat';
+//     localStorage.setItem('name', name);
+//     localStorage.setItem('chat', chat);
+//   };
+// };
 
 // Check server to make sure name is not in use
 // function checkName(name) {
@@ -31,14 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
   // Logic for "login" when connecting to the server
-  socket.on('connect', function() {
-    if (name == null || name == '' || name == 'null') {
-      promptName();
-    };
-    socket.emit('get userlist')
-    const user = name;
-    element.innerHTML = 'Hi ' + user + ', welcome to Flack!';
-  });
+  // socket.on('connect', function() {
+  //   if (name == null || name == '' || name == 'null') {
+  //     promptName();
+  //   };
+  //   // socket.emit('get userlist')
+  //   const user = name;
+  //   element.innerHTML = 'Hi ' + user + ', welcome to Flack!';
+  // });
 
   // Logic for the "logout" button
   document.querySelectorAll('#logout').forEach(button => {
@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#new-message').onsubmit = () => {
       // Create new item for list and submit to server
       const comment = document.createElement('li');
-      comment.innerHTML = "[" + timestampUTC + "] " + name + ": " + document.querySelector('#message').value;
-      socket.emit('submit comment', comment.innerHTML);
+      comment.innerHTML = "[" + name + "]: " + document.querySelector('#message').value;
+      socket.emit('submit comment', [name, chat, comment.innerHTML]);
       // Clear input field and disable button again
       document.querySelector('#message').value = '';
       document.querySelector('#submit').disabled = true;
@@ -82,13 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // When the user list is announced, update the user list on the web page
-  socket.on('announce userlist', users => {
-    var list = '';
-    for (const user of users) {
-      const name = '<li>' + user + '</li>';
-      list = list.concat(name);
-    };
-    document.querySelector('#online-users').innerHTML = list;
-  });
+  // socket.on('announce userlist', onlineUsers => {
+  //   var list = '';
+  //   for (const user of users) {
+  //     const name = '<li>' + user + '</li>';
+  //     list = list.concat(name);
+  //   };
+  //   document.querySelector('#online-users').innerHTML = list;
+  // });
 
 });

@@ -19,6 +19,12 @@
       </div>
 
       <div class="container pt-3">
+        <!-- <h5>Channels:</h5>
+        <select class="form-control" name="availablechannels">
+            {% for channel in channels %}
+                <option value="{{ channel.name }}">{{ channel.name }}</option>
+            {% endfor %}
+        </select> -->
         <ul id="messages"></ul>
         <form id="new-message">
             <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
