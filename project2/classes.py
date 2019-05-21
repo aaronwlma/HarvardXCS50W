@@ -31,6 +31,13 @@ class Chat:
         for message in self.messages:
             print(message.id, message.timestamp, ":", message.user, "-", message)
 
+    def return_messages(self):
+        chat = []
+        for message in self.messages:
+            line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S.%f)") + " ] " + message.user.username + " - " + message.message
+            chat.append(line)
+        return chat
+
     def __repr__(self):
         return self.name
 
@@ -60,9 +67,14 @@ class Message:
         self.user = user
         self.timestamp = datetime.datetime.now()
 
+    def print_message(self):
+        line = "[ " + self.timestamp.strftime("%d-%b-%Y (%H:%M:%S.%f)") + " ] " + self.user.username + " - " + self.message
+        return line
+
     def return_all(self):
         output = [self.id, self.timestamp, self.user, self.message]
         return output
+
     def __repr__(self):
         return self.message
 

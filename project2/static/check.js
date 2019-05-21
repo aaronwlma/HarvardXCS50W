@@ -1,64 +1,38 @@
-// var name = localStorage.getItem('name');
-// var chat = localStorage.getItem('chat');
+// Check if the local session has a name, if not, then prompt for one and verify against the server
+var name = localStorage.getItem('name');
+var chat = localStorage.getItem('chat');
 
-if (localStorage.getItem('name') === null) {
+if (name == null || name == 'null' || name == '') {
   var nameInput = prompt("Welcome to Flack! Please enter your name:");
 
-  if (nameInput != null || nameInput != '' || nameInput != 'null') {
-    // Connect to server
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-    socket.emit('login', nameInput);
+  // Open an XMLHttpRequest to send the input to the server to validate
+  const request = new XMLHttpRequest();
+  request.open('POST', '/login');
 
-    socket.on('announce userlist', userlist => {
+  // When the server sends information to the client, run this body of code
+  request.onload = function() {
+    const data = JSON.parse(request.responseText);
+
+    // If the server validation returns true, then set local storage and HTML elements to the input
+    if (data.valid === true) {
       localStorage.setItem('name', nameInput);
+      localStorage.setItem('chat', 'globalChat');
+      // Connect to server
+      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
       var element = document.getElementById('name');
       element.innerHTML = 'Hi ' + nameInput + ', welcome to Flack!';
-    });
 
-    socket.on('fail validation', nameInput => {
+    }
+    // If the server validation returns false, alert an invalid name and reload the page
+    else {
+      window.alert("Name is not valid or already in use. Please try again.")
       document.location.reload();
-    });
+    }
   }
-  else {
-    document.location.reload();
-  };
-}
-else {
-  // Connect to server
-  var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-  socket.emit('login', nameInput);
 
-  socket.on('announce userlist', userlist => {
-    localStorage.setItem('name', nameInput);
-    var element = document.getElementById('name');
-    element.innerHTML = 'Hi ' + nameInput + ', welcome to Flack!';
-  });
+  // Create and send the client data to the server
+  const data = new FormData();
+  data.append('nameInput', nameInput);
+  request.send(data);
 };
-
-
-// function promptName() {
-//   var name = prompt("Welcome to Flack! Please enter your name:");
-//   if (name == null || name == '' || name == 'null') {
-//     promptName();
-//   } else {
-//     var chat = 'globalChat';
-//     localStorage.setItem('name', name);
-//     localStorage.setItem('chat', chat);
-//   };
-// };
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   // Connect to server
-//   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-//
-//   // Logic for "login" when connecting to the server
-//   socket.on('connect', function() {
-//     const user = name;
-//     if (user == null || user == '' || user == 'null') {
-//       element.innerHTML = '';
-//       promptName();
-//     }
-//     socket.emit('login', user);
-//     element.innerHTML = 'Hi ' + name + ', welcome to Flack!';
-//   });
-// });
