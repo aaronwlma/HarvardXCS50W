@@ -11,11 +11,11 @@ class Chat:
 
     def add_user(self, user):
         self.users.append(user)
-        user.chats.append(self)
+        user.chat = self.name
 
     def remove_user(self, user):
         self.users.remove(user)
-        user.chats.append(self)
+        user.chat = ''
 
     def add_message(self, user, message):
         self.user = user
@@ -45,7 +45,11 @@ class User:
 
     def __init__(self, username):
         self.username = username
-        self.chats = []
+        self.chat = ''
+
+    def __init__(self, username, chat):
+        self.username = username
+        self.chat = chat
 
     def __repr__(self):
         return self.username
@@ -54,7 +58,7 @@ class User:
         if not isinstance(other, User):
             # don't attempt to compare against unrelated types
             return NotImplemented
-        return self.username == other.username and self.chats == other.chats
+        return self.username == other.username and self.chat == other.chat
 
 class Message:
 

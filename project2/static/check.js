@@ -16,7 +16,7 @@ if (name == null || name == 'null' || name == '') {
     // If the server validation returns true, then set local storage and HTML elements to the input
     if (data.valid === true) {
       localStorage.setItem('name', nameInput);
-      localStorage.setItem('chat', 'globalChat');
+      localStorage.setItem('chat', 'Global Chat');
       // Connect to server
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
@@ -26,7 +26,7 @@ if (name == null || name == 'null' || name == '') {
     }
     // If the server validation returns false, alert an invalid name and reload the page
     else {
-      window.alert("Name is not valid or already in use. Please try again.")
+      confirm("Name is not valid or already in use. Please try again.")
       document.location.reload();
     }
   }

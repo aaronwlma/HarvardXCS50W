@@ -4,8 +4,10 @@
 # @author         Aaron Ma
 # @description    Chat client that allows conversations in a global chat or in a
 #                 custom channel
-# @date           May 21st, 2019
+# @date           May 22nd, 2019
 ################################################################################
+
+# ALL FUNCTIONS IN, RIGHT NOW DUPLICATE CHANNEL NAMES ARE WORKING AND IT SHOULDNT
 
 ################################################################################
 # Import the relevant libraries and tools for the website to run
@@ -30,8 +32,10 @@ Session(app)
 
 # Initial server values
 onlineUsers = {}
-globalChat = Chat(name="globalChat")
-channels = {'globalChat': globalChat}
+globalChat = Chat(name="Global Chat")
+channels = {'Global Chat': globalChat}
+if __name__ == '__main__':
+    socketio.run(app)
 
 ################################################################################
 # Functions for the flask website
@@ -62,7 +66,7 @@ def validChan(channame):
     return valid
 
 def makeUser(username):
-    userObj = User(username=username)
+    userObj = User(username=username, chat='Global Chat')
     onlineUsers[username] = userObj
     print("Added", userObj.username, "to user list.")
     print("Online users:")
@@ -76,15 +80,13 @@ def makeChan(channame):
     channels[channame] = chanObj
     print("Added", chanObj.name, "to channel list.")
     print("Current channels:")
-    print(channels)
+    print(list(channels.keys()))
     return chanObj
-
-if __name__ == '__main__':
-    socketio.run(app)
 
 ################################################################################
 # Routes and socket communications for the flask website
 ################################################################################
+# Default page for the application
 @app.route("/")
 def index():
     return render_template("index.html", users=list(onlineUsers.keys()), channels=channels)
@@ -128,17 +130,46 @@ def logout(user):
     emit("announce userlist", userlist, broadcast=True)
 
 @socketio.on("submit comment")
-def comment(data):
-    currentUser = onlineUsers[data[0]]
-    currentChat = channels[data[1]]
-    message = Message(currentUser, data[2])
+def comment(username, channame, comment):
+    currentUser = onlineUsers[username]
+    currentChat = channels[channame]
+    message = Message(currentUser, comment)
     currentChat.add_message(currentUser, message)
     data = message.print_message()
     chatHistory = currentChat.return_messages()
-    emit("announce channel chat", chatHistory, broadcast=True)
+    emit("announce channel chat", [chatHistory, channame], broadcast=True)
+
+@socketio.on("create channel")
+def createchannel(channame, username):
+    print("[CREATE CHANNEL]")
+    if channame in channels.keys():
+        print(channame, "already exists.")
+        emit("announce invalid channel", channame, broadcast=True)
+    else:
+        newChan = makeChan(channame)
+        print(newChan, "was created.")
+        userObj = onlineUsers[username]
+        userObj.chat = channame
+        newChan.add_user(userObj)
+        print(userObj, "has been added", newChan)
+        channellist = list(channels.keys())
+        emit("announce channel list", channellist, broadcast=True)
+        emit("announce change channel", channame, broadcast=True)
+
+@socketio.on("change channel")
+def changechannel(channame, username):
+    print("[CHANGE CHANNEL]")
+    userObj = onlineUsers[username]
+    userObj.chat = channame
+    emit("announce change channel", channame, broadcast=True)
 
 @socketio.on("get channel chat")
-def channelchat(data):
-    chat = channels[data]
+def channelchat(channame):
+    chat = channels[channame]
     chatHistory = chat.return_messages()
-    emit("announce channel chat", chatHistory, broadcast=True)
+    emit("announce channel chat", [chatHistory, channame], broadcast=True)
+
+@socketio.on("get channel list")
+def channellist():
+    channellist = list(channels.keys())
+    emit("announce channel list", channellist, broadcast=True)

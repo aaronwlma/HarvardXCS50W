@@ -18,17 +18,33 @@
         <hr>
       </div>
 
-      <div class="container pt-3">
-        <h5 id="currentChannel"></h5>
-        <!-- <select class="form-control" name="availablechannels">
-            {% for channel in channels %}
-                <option value="{{ channel.name }}">{{ channel.name }}</option>
-            {% endfor %}
-        </select> -->
+      <div class="container pt-9">
+        <h5 id="current-channel"></h5>
         <ul id="messages"></ul>
+        <h6>Submit a Message:</h6>
         <form id="new-message">
             <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
             <input id="submit" type="submit">
+        </form>
+        <hr>
+      </div>
+
+      <div class="container pt-9">
+        <h5>Channel List:</h5>
+        <h6>Make a New Channel:</h6>
+        <form id="new-channel">
+            <input id="channel" autocomplete="off" autofocus placeholder="New Channel" type="text">
+            <input id="submit-chan" type="submit">
+        </form>
+        <h6>Available Channels:</h5>
+        <!-- <ul id="available-channels"></ul> -->
+        <form id="change-channel">
+          <select id="select-channel">
+              {% for channel in channels %}
+                  <option value="{{ channel }}">{{ channel }}</option>
+              {% endfor %}
+          </select>
+          <input id="switch-chan" type="submit"></button>
         </form>
         <hr>
       </div>
@@ -37,6 +53,8 @@
         <h5>Online Users:</h5>
         <ul id="online-users"></ul>
       </div>
+
+
 
       <script type="text/javascript" src="{{ url_for('static', filename='page.js') }}"></script>
     </body>

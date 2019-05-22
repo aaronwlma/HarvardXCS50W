@@ -1,22 +1,25 @@
 // Listener that dynamic adjusts page content
 document.addEventListener('DOMContentLoaded', function() {
+
   // Connect to server
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
   socket.on('connect', () => {
-
     if (localStorage.getItem('chat') == null) {
-      localStorage.setItem('chat', 'globalChat');
+      localStorage.setItem('chat', 'Global Chat');
     }
 
     var chat = localStorage.getItem('chat')
     var name = localStorage.getItem('name')
 
     socket.emit('get userlist');
+    socket.emit('get channel list');
     socket.emit('get channel chat', chat);
 
     var element = document.getElementById('name');
     element.innerHTML = 'Hi ' + name + ', welcome to Flack!';
+    var element2 = document.getElementById('current-channel')
+    element2.innerHTML = chat;
 
     // Logic for the "logout" button
     document.querySelectorAll('#logout').forEach(button => {
@@ -46,12 +49,47 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = localStorage.getItem('name');
         const chat = localStorage.getItem('chat');
         comment.innerHTML = document.querySelector('#message').value;
-        socket.emit('submit comment', [name, chat, comment.innerHTML]);
+        socket.emit('submit comment', name, chat, comment.innerHTML);
         // Clear input field and disable button again
         document.querySelector('#message').value = '';
         document.querySelector('#submit').disabled = true;
         // Stop form from submitting
         return false;
+    };
+
+    // Logic for channel box for chat
+    document.querySelector('#submit-chan').disabled = true;
+    // Enable button only if there is text in the input field
+    document.querySelector('#channel').onkeyup = () => {
+        if (document.querySelector('#channel').value.length > 0)
+            document.querySelector('#submit-chan').disabled = false;
+        else
+            document.querySelector('#submit-chan').disabled = true;
+    };
+
+    // Logic for submitting a channel to the server
+    document.querySelector('#new-channel').onsubmit = () => {
+        // Create new item for list and submit to server
+        const username = localStorage.getItem('name');
+        const channame = document.querySelector('#channel').value;
+        socket.emit('create channel', channame, username);
+        localStorage.setItem('chat', channame);
+        // Clear input field and disable button again
+        document.querySelector('#channel').value = '';
+        document.querySelector('#submit-chan').disabled = true;
+        document.location.reload();
+        // Stop form from submitting
+        return false;
+    };
+
+    // Logic for changing channels on the server
+    document.querySelector('#change-channel').onsubmit = () => {
+        // Create new item for list and submit to server
+        const username = localStorage.getItem('name');
+        const channame = document.getElementById("select-channel").value;
+        localStorage.setItem('chat', channame);
+        socket.emit('change channel', channame, username);
+        document.location.reload();
     };
 
     // When the user list is announced, update the user list on the web page
@@ -64,15 +102,36 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#online-users').innerHTML = list;
     });
 
+    // When the channel list is announced, update the user list on the web page
+    socket.on('announce channel list', channellist => {
+      var list = '';
+
+      for (const channel of channellist) {
+        // const channame = '<a href="javascript:testFunction()"><li>' + channel + '</li></a>';
+        const channame = '<li>' + channel + '</li>';
+        list = list.concat(channame);
+      };
+
+      // document.querySelector('#available-channels').innerHTML = list;
+    });
+
     // When the the channel chat is updated, update the channel chat on the web page
     socket.on('announce channel chat', chatHistory => {
       var list = '';
-      for (const chat of chatHistory) {
-        const line = '<li>' + chat + '</li>';
-        list = list.concat(line);
+      if (localStorage.getItem('chat') == chatHistory[1]) {
+        for (const chat of chatHistory[0]) {
+          const line = '<li>' + chat + '</li>';
+          list = list.concat(line);
+        };
+        document.querySelector('#messages').innerHTML = list;
       };
-      document.querySelector('#messages').innerHTML = list;
     });
 
+    // When the user list is announced, update the user list on the web page
+    socket.on('announce invalid channel', channame => {
+      console.log('hi')
+      confirm("Channel name is not valid or already in use. Please try again.")
+      document.location.reload();
+    });
   });
 });
