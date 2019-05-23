@@ -44,43 +44,34 @@ if __name__ == '__main__':
 def validUser(username):
     valid = False
     if (username == None or username == '' or username == 'null'):
-        print("Null value detected.")
+        valid = False
     else:
         if username in onlineUsers:
-            print(username, "is not valid.")
+            valid = False
         else:
-            print(username, "is valid.")
             valid = True
     return valid
 
 def validChan(channame):
     valid = False
     if (channame == None or channame == '' or channame == 'null'):
-        print("Null value detected.")
+        valid = False
     else:
         if channame in channels:
-            print(channame, "is not valid.")
+            valid = False
         else:
-            print(channame, "is valid.")
             valid = True
     return valid
 
 def makeUser(username):
     userObj = User(username=username, chat='Global Chat')
     onlineUsers[username] = userObj
-    print("Added", userObj.username, "to user list.")
-    print("Online users:")
-    print(list(onlineUsers.keys()))
     globalChat.add_user(userObj)
-    print(userObj, "has joined global chat.")
     return userObj
 
 def makeChan(channame):
     chanObj = Chat(name=channame)
     channels[channame] = chanObj
-    print("Added", chanObj.name, "to channel list.")
-    print("Current channels:")
-    print(list(channels.keys()))
     return chanObj
 
 ################################################################################
@@ -97,17 +88,28 @@ def login():
     user = request.form.get("nameInput")
     valid = False
     if (validUser(user) == True):
-        print("[ATTEMPT LOGIN]")
         if user not in onlineUsers:
             newUser = makeUser(user)
-            print(newUser, "has connected.")
-            print("Online users:")
-            print(list(onlineUsers.keys()))
             valid = True
         else:
-            print(user, "already logged in.")
+            valid = False
     else:
-        print(user, "is not a valid name.")
+        valid = False
+    return jsonify({"valid": valid})
+
+# XMLHttpRequest to listen for attempts to create a new channel
+@app.route("/newchan", methods=["GET", "POST"])
+def newchan():
+    chan = request.form.get("chanInput")
+    valid = False
+    if (validChan(chan) == True):
+        if chan not in channels:
+            newChan = makeChan(chan)
+            valid = True
+        else:
+            valid = False
+    else:
+        valid = False
     return jsonify({"valid": valid})
 
 # Socket listeners to trigger proper events
@@ -118,14 +120,8 @@ def userlist():
 
 @socketio.on("logout")
 def logout(user):
-    print("[ATTEMPT LOGOUT]")
     if user in onlineUsers:
-        print(onlineUsers[user], "has logged out.")
         del onlineUsers[user]
-        print("Online users:")
-        print(onlineUsers)
-    else:
-        print(user, "does not exist to log out.")
     userlist = list(onlineUsers.keys())
     emit("announce userlist", userlist, broadcast=True)
 
@@ -139,26 +135,8 @@ def comment(username, channame, comment):
     chatHistory = currentChat.return_messages()
     emit("announce channel chat", [chatHistory, channame], broadcast=True)
 
-@socketio.on("create channel")
-def createchannel(channame, username):
-    print("[CREATE CHANNEL]")
-    if channame in channels.keys():
-        print(channame, "already exists.")
-        emit("announce invalid channel", channame, broadcast=True)
-    else:
-        newChan = makeChan(channame)
-        print(newChan, "was created.")
-        userObj = onlineUsers[username]
-        userObj.chat = channame
-        newChan.add_user(userObj)
-        print(userObj, "has been added", newChan)
-        channellist = list(channels.keys())
-        emit("announce channel list", channellist, broadcast=True)
-        emit("announce change channel", channame, broadcast=True)
-
 @socketio.on("change channel")
 def changechannel(channame, username):
-    print("[CHANGE CHANNEL]")
     userObj = onlineUsers[username]
     userObj.chat = channame
     emit("announce change channel", channame, broadcast=True)

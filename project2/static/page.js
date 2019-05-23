@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Connect to server
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
+  // Once the socket connects, have these query selectors and socket listeners available
   socket.on('connect', () => {
     if (localStorage.getItem('chat') == null) {
       localStorage.setItem('chat', 'Global Chat');
@@ -32,6 +33,47 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
 
+    // Logic for the "make a new channel" button
+    document.querySelectorAll('#new-channel').forEach(button => {
+        button.onclick = () => {
+            const user = localStorage.getItem('name');
+            var chanInput = prompt("Please enter a channel name:");
+
+            // Open an XMLHttpRequest to send the input to the server to validate
+            const request = new XMLHttpRequest();
+            request.open('POST', '/newchan');
+
+            // When the server sends information to the client, run this body of code
+            request.onload = function() {
+              const reply = JSON.parse(request.responseText);
+              // If the server validation returns true, then set local storage and HTML elements to the input
+              if (reply.valid === true) {
+                localStorage.setItem('chat', chanInput);
+                document.location.reload();
+              }
+              // If the server validation returns false, alert an invalid name and reload the page
+              else {
+                confirm("Name is not valid or already in use. Please try again.")
+                document.location.reload();
+              }
+            }
+            // Create and send the client data to the server
+            const reply = new FormData();
+            reply.append('chanInput', chanInput);
+            request.send(reply);
+        };
+    });
+
+    // Logic for changing channels on the server
+    document.querySelector('#change-channel').onsubmit = () => {
+        // Create new item for list and submit to server
+        const username = localStorage.getItem('name');
+        const channame = document.getElementById("select-channel").value;
+        localStorage.setItem('chat', channame);
+        socket.emit('change channel', channame, username);
+        document.location.reload();
+    };
+
     // Logic for message box for chat
     document.querySelector('#submit').disabled = true;
     // Enable button only if there is text in the input field
@@ -41,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else
             document.querySelector('#submit').disabled = true;
     };
-
     // Logic for submitting a message to the server
     document.querySelector('#new-message').onsubmit = () => {
         // Create new item for list and submit to server
@@ -55,41 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#submit').disabled = true;
         // Stop form from submitting
         return false;
-    };
-
-    // Logic for channel box for chat
-    document.querySelector('#submit-chan').disabled = true;
-    // Enable button only if there is text in the input field
-    document.querySelector('#channel').onkeyup = () => {
-        if (document.querySelector('#channel').value.length > 0)
-            document.querySelector('#submit-chan').disabled = false;
-        else
-            document.querySelector('#submit-chan').disabled = true;
-    };
-
-    // Logic for submitting a channel to the server
-    document.querySelector('#new-channel').onsubmit = () => {
-        // Create new item for list and submit to server
-        const username = localStorage.getItem('name');
-        const channame = document.querySelector('#channel').value;
-        socket.emit('create channel', channame, username);
-        localStorage.setItem('chat', channame);
-        // Clear input field and disable button again
-        document.querySelector('#channel').value = '';
-        document.querySelector('#submit-chan').disabled = true;
-        document.location.reload();
-        // Stop form from submitting
-        return false;
-    };
-
-    // Logic for changing channels on the server
-    document.querySelector('#change-channel').onsubmit = () => {
-        // Create new item for list and submit to server
-        const username = localStorage.getItem('name');
-        const channame = document.getElementById("select-channel").value;
-        localStorage.setItem('chat', channame);
-        socket.emit('change channel', channame, username);
-        document.location.reload();
     };
 
     // When the user list is announced, update the user list on the web page
@@ -127,11 +133,5 @@ document.addEventListener('DOMContentLoaded', function() {
       };
     });
 
-    // When the user list is announced, update the user list on the web page
-    socket.on('announce invalid channel', channame => {
-      console.log('hi')
-      confirm("Channel name is not valid or already in use. Please try again.")
-      document.location.reload();
-    });
   });
 });
