@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = '<li>' + user + '</li>';
         list = list.concat(name);
       };
-      document.querySelector('#online-users').innerHTML = list;
+      document.querySelector('#channel-users').innerHTML = list;
     });
 
     // When the channel list is announced, update the user list on the web page

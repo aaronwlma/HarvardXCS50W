@@ -7,7 +7,11 @@
 # @date           May 22nd, 2019
 ################################################################################
 
-# ALL FUNCTIONS IN, RIGHT NOW DUPLICATE CHANNEL NAMES ARE WORKING AND IT SHOULDNT
+# IMPLEMENT "X HAS JOINED/LEFT CHAT"
+# IMPLEMENT CHANNEL USERS TO UPDATE THOSE THAT ARE IN THE ROOM
+# FORMAT USING BOOTSTRAP A PROPER WINDOW
+# CLEAN UP AND COMMENT CODE
+# WRITE GITHUB DESCRIPTIONS
 
 ################################################################################
 # Import the relevant libraries and tools for the website to run

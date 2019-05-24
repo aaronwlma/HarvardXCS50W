@@ -10,7 +10,7 @@
     <body>
       <script type="text/javascript" src="{{ url_for('static', filename='check.js') }}"></script>
 
-      <div class="container pt-3">
+      <div class="container-fluid pt-3">
         <h1>Flack</h1>
         <h6 id="name"></h6>
         <p>Join a chat room to begin chatting...or make your own!</p>
@@ -18,39 +18,35 @@
         <hr>
       </div>
 
-      <div class="container pt-9">
-        <h5 id="current-channel"></h5>
-        <ul id="messages"></ul>
-        <h6>Submit a Message:</h6>
-        <form id="new-message">
-            <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
-            <input id="submit" type="submit">
-        </form>
-        <hr>
+      <div class="row container-fluid">
+        <div class="col-md-8">
+          <div class="container">
+            <h4 id="current-channel"></h4>
+            <ul id="messages"></ul>
+            <h6>Submit a Message:</h6>
+            <form id="new-message">
+                <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
+                <input id="submit" type="submit">
+            </form>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Available Channels:</h4>
+          <form id="change-channel">
+            <select id="select-channel">
+                {% for channel in channels %}
+                    <option value="{{ channel }}">{{ channel }}</option>
+                {% endfor %}
+            </select>
+            <input id="switch-chan" type="submit"></button>
+          </form>
+          <button id="new-channel">Make a new channel</button>
+          <hr>
+          <h4>Channel Users:</h4>
+          <ul id="channel-users"></ul>
+        </div>
       </div>
-
-      <div class="container pt-9">
-        <h5>Channel List:</h5>
-        <h6>Available Channels:</h5>
-        <!-- <ul id="available-channels"></ul> -->
-        <form id="change-channel">
-          <select id="select-channel">
-              {% for channel in channels %}
-                  <option value="{{ channel }}">{{ channel }}</option>
-              {% endfor %}
-          </select>
-          <input id="switch-chan" type="submit"></button>
-        </form>
-        <button id="new-channel">Make a new channel</button>
-        <hr>
-      </div>
-
-      <div class="container pt-3">
-        <h5>Online Users:</h5>
-        <ul id="online-users"></ul>
-      </div>
-
-
 
       <script type="text/javascript" src="{{ url_for('static', filename='page.js') }}"></script>
     </body>
