@@ -34,7 +34,10 @@ class Chat:
     def return_messages(self):
         chat = []
         for message in self.messages:
-            line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S.%f)") + " ] " + message.user.username + " - " + message.message
+            if message.joinchat == False:
+                line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S)") + " ] " + message.user.username + " - " + message.message
+            else:
+                line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S)") + " ] " + message.message
             chat.append(line)
         return chat
 
@@ -70,9 +73,10 @@ class Message:
         self.message = message
         self.user = user
         self.timestamp = datetime.datetime.now()
+        self.joinchat = False
 
     def print_message(self):
-        line = "[ " + self.timestamp.strftime("%d-%b-%Y (%H:%M:%S.%f)") + " ] " + self.user.username + " - " + self.message
+        line = "[ " + self.timestamp.strftime("%d-%b-%Y (%H:%M:%S)") + " ] " + self.user.username + " - " + self.message
         return line
 
     def return_all(self):

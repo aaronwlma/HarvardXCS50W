@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
               const reply = JSON.parse(request.responseText);
               // If the server validation returns true, then set local storage and HTML elements to the input
               if (reply.valid === true) {
+                const username = localStorage.getItem('name');
+                const currchan = localStorage.getItem('chat');
+                socket.emit('change channel', currchan, chanInput, username);
                 localStorage.setItem('chat', chanInput);
                 document.location.reload();
               }
@@ -68,9 +71,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#change-channel').onsubmit = () => {
         // Create new item for list and submit to server
         const username = localStorage.getItem('name');
+        const currchan = localStorage.getItem('chat');
         const channame = document.getElementById("select-channel").value;
+        socket.emit('change channel', currchan, channame, username);
         localStorage.setItem('chat', channame);
-        socket.emit('change channel', channame, username);
         document.location.reload();
     };
 
@@ -117,8 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const channame = '<li>' + channel + '</li>';
         list = list.concat(channame);
       };
-
-      // document.querySelector('#available-channels').innerHTML = list;
     });
 
     // When the the channel chat is updated, update the channel chat on the web page

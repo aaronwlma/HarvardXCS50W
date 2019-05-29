@@ -22,6 +22,8 @@ if (name == null || name == 'null' || name == '') {
 
       var element = document.getElementById('name');
       element.innerHTML = 'Hi ' + nameInput + ', welcome to Flack!';
+      const user = localStorage.getItem('name');
+      socket.emit('initial login', user);
 
     }
     // If the server validation returns false, alert an invalid name and reload the page

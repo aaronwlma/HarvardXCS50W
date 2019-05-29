@@ -122,8 +122,28 @@ def userlist():
     userlist = list(onlineUsers.keys())
     emit("announce userlist", userlist, broadcast=True)
 
+@socketio.on("initial login")
+def initiallogin(user):
+    currentUser = onlineUsers[user]
+    currentChat = channels[currentUser.chat]
+
+    message = Message(currentUser, user + " has joined the channel.")
+    message.joinchat = True
+    currentChat.add_message(currentUser, message)
+    chatHistory = currentChat.return_messages()
+    emit("announce channel chat", [chatHistory, currentChat.name], broadcast=True)
+
 @socketio.on("logout")
 def logout(user):
+    currentUser = onlineUsers[user]
+    currentChat = channels[currentUser.chat]
+
+    message = Message(currentUser, user + " has left the channel.")
+    message.joinchat = True
+    currentChat.add_message(currentUser, message)
+    chatHistory = currentChat.return_messages()
+    emit("announce channel chat", [chatHistory, currentChat.name], broadcast=True)
+
     if user in onlineUsers:
         del onlineUsers[user]
     userlist = list(onlineUsers.keys())
@@ -140,10 +160,24 @@ def comment(username, channame, comment):
     emit("announce channel chat", [chatHistory, channame], broadcast=True)
 
 @socketio.on("change channel")
-def changechannel(channame, username):
+def changechannel(currchan, channame, username):
     userObj = onlineUsers[username]
     userObj.chat = channame
-    emit("announce change channel", channame, broadcast=True)
+    currentUser = onlineUsers[username]
+    currentChat = channels[currchan]
+
+    message = Message(currentUser, username + " has left the channel.")
+    message.joinchat = True
+    currentChat.add_message(currentUser, message)
+    chatHistory = currentChat.return_messages()
+    emit("announce channel chat", [chatHistory, currchan], broadcast=True)
+
+    currentChat = channels[channame]
+    message = Message(currentUser, username + " has joined the channel.")
+    message.joinchat = True
+    currentChat.add_message(currentUser, message)
+    chatHistory = currentChat.return_messages()
+    emit("announce channel chat", [chatHistory, channame], broadcast=True)
 
 @socketio.on("get channel chat")
 def channelchat(channame):
