@@ -10,41 +10,46 @@
     <body>
       <script type="text/javascript" src="{{ url_for('static', filename='check.js') }}"></script>
 
-      <div class="container-fluid pt-3">
-        <h1>Flack</h1>
-        <h6 id="name"></h6>
-        <p>Join a chat room to begin chatting...or make your own!</p>
-        <button id="logout">Logout</button>
-        <hr>
-      </div>
+      <div class="d-flex flex-column bg-white">
+        <div class="container-fluid pt-3 pb-3 bg-dark text-light p-4">
+          <h1>Flack</h1>
+          <h6 id="name"></h6>
+          <p>Join a chat room to begin chatting...or make your own!</p>
+          <button id="logout">Logout</button>
+        </div>
 
-      <div class="row container-fluid">
-        <div class="col-md-8">
-          <div class="container">
+        <div class="d-flex flex-row container-fluid pt-3 pb-3 p-2">
+          <div class="d-flex flex-column p-4 col-9 bg-light" style="height: 100%;">
             <h4 id="current-channel"></h4>
-            <ul id="messages"></ul>
-            <h6>Submit a Message:</h6>
-            <form id="new-message">
-                <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text">
-                <input id="submit" type="submit">
+            <div class="pt-3 pb-3" style="height:60vh;">
+              <ul id="messages" style="height:100%; overflow-y:scroll;"></ul>
+            </div>
+          </div>
+          <div class="d-flex flex-column p-4 col-3 bg-white" style="height: 100%;">
+            <h4>Available Channels:</h4>
+            <form id="change-channel" class="w-100">
+              <select id="select-channel" class="w-100">
+                  {% for channel in channels %}
+                      <option value="{{ channel }}">{{ channel }}</option>
+                  {% endfor %}
+              </select>
+              <input id="switch-chan" type="submit" class="w-100"></button>
             </form>
+            <button id="new-channel" class="w-100">Make a new channel</button>
+            <hr>
+            <h4>Online Users:</h4>
+            <ul id="channel-users"></ul>
           </div>
         </div>
 
-        <div class="col-md-4">
-          <h4>Available Channels:</h4>
-          <form id="change-channel">
-            <select id="select-channel">
-                {% for channel in channels %}
-                    <option value="{{ channel }}">{{ channel }}</option>
-                {% endfor %}
-            </select>
-            <input id="switch-chan" type="submit"></button>
-          </form>
-          <button id="new-channel">Make a new channel</button>
-          <hr>
-          <h4>Channel Users:</h4>
-          <ul id="channel-users"></ul>
+        <div class="d-flex flex-row container-fluid pt-3 pb-3 p-2 fixed-bottom">
+          <div class="d-flex flex-column p-4 col-9 text-light bg-secondary">
+            <h6>Submit a Message:</h6>
+            <form id="new-message">
+                <input id="message" autocomplete="off" autofocus placeholder="New Message" type="text" style="width:80%;">
+                <input id="submit" type="submit" style="width:19%;">
+            </form>
+          </div>
         </div>
       </div>
 

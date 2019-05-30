@@ -1,3 +1,14 @@
+// #############################################################################
+// Flack - Page Listener for Change in Events (Client)
+// #############################################################################
+// @author         Aaron Ma
+// @description    Chat client that allows conversations in a global chat or in
+//                 custom channel
+// @component      Listener on the client that determines what the webpage
+//                 should dynamically display for the user
+// @date           May 30th, 2019
+// #############################################################################
+
 // Listener that dynamic adjusts page content
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -6,22 +17,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Once the socket connects, have these query selectors and socket listeners available
   socket.on('connect', () => {
+    // If the client does not have a chat designated in local storage, default to the Global Chat
     if (localStorage.getItem('chat') == null) {
       localStorage.setItem('chat', 'Global Chat');
     }
 
+    // Retrieve the local storage values for channel and username to use as variables
     var chat = localStorage.getItem('chat')
     var name = localStorage.getItem('name')
 
+    // Each time the client connects, make sure to get the most updated user and channel lists
     socket.emit('get userlist');
     socket.emit('get channel list');
     socket.emit('get channel chat', chat);
 
+    // Generate header elements to reflect the client's user name and channel
     var element = document.getElementById('name');
     element.innerHTML = 'Hi ' + name + ', welcome to Flack!';
-    var element2 = document.getElementById('current-channel')
+    var element2 = document.getElementById('current-channel');
     element2.innerHTML = chat;
 
+    // Logic for the HTML elements on the webpage
     // Logic for the "logout" button
     document.querySelectorAll('#logout').forEach(button => {
         button.onclick = () => {
@@ -102,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     };
 
+    // Listeners for when the server broadcasts a message
     // When the user list is announced, update the user list on the web page
     socket.on('announce userlist', userlist => {
       var list = '';
@@ -117,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
       var list = '';
 
       for (const channel of channellist) {
-        // const channame = '<a href="javascript:testFunction()"><li>' + channel + '</li></a>';
         const channame = '<li>' + channel + '</li>';
         list = list.concat(channame);
       };
@@ -133,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         document.querySelector('#messages').innerHTML = list;
       };
+      var textarea = document.getElementById('messages');
+      textarea.scrollTop = textarea.scrollHeight;
     });
-
   });
 });

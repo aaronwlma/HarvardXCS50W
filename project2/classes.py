@@ -1,6 +1,24 @@
+################################################################################
+# Flack - Supporting Class Objects (Server)
+################################################################################
+# @author         Aaron Ma
+# @description    Chat client that allows conversations in a global chat or in a
+#                 custom channel
+# @component      Program to initialize objects for the server to organize the
+#                 information provided by clients
+# @date           May 30th, 2019
+################################################################################
+
+################################################################################
+# Import the relevant libraries and tools for the classes
+################################################################################
 import collections
 import datetime
 
+################################################################################
+# Class objects to be used on the server
+################################################################################
+# Class object that contains chat messages, involved users, and chat name
 class Chat:
 
     def __init__(self, name):
@@ -37,13 +55,14 @@ class Chat:
             if message.joinchat == False:
                 line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S)") + " ] " + message.user.username + " - " + message.message
             else:
-                line = "[ " + message.timestamp.strftime("%d-%b-%Y (%H:%M:%S)") + " ] " + message.message
+                line = "[" + message.message + "]"
             chat.append(line)
         return chat
 
     def __repr__(self):
         return self.name
 
+# Class object that contains user name and involved channels
 class User:
 
     def __init__(self, username):
@@ -63,6 +82,7 @@ class User:
             return NotImplemented
         return self.username == other.username and self.chat == other.chat
 
+# Class object that contains the message, user submitted, and time stamp
 class Message:
 
     counter = 1
@@ -86,6 +106,9 @@ class Message:
     def __repr__(self):
         return self.message
 
+################################################################################
+# Main functions to run to verify that the user objects are created properly
+################################################################################
 def main():
 
     # Test creating user objects

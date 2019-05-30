@@ -1,7 +1,19 @@
-// Check if the local session has a name, if not, then prompt for one and verify against the server
+// #############################################################################
+// Flack - Username Verification (Client)
+// #############################################################################
+// @author         Aaron Ma
+// @description    Chat client that allows conversations in a global chat or in
+//                 custom channel
+// @component      Script the client requested username against the server
+//                 values
+// @date           May 30th, 2019
+// #############################################################################
+
+// Retrieve what the client has as local storage values first
 var name = localStorage.getItem('name');
 var chat = localStorage.getItem('chat');
 
+// Check if the local session has a name, if not, then prompt for one and verify against the server
 if (name == null || name == 'null' || name == '') {
   var nameInput = prompt("Welcome to Flack! Please enter your name:");
 
